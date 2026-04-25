@@ -1,0 +1,26 @@
+digraph DPDA {
+  rankdir=LR;
+  node [fontname="monospace"];
+  labelloc="t"; label="DPDA: S→(S)|ε";
+  s0 [shape=circle, label="q0"];
+  s1 [shape=doublecircle, label="q1"];
+  s2 [shape=circle, label="q2"];
+  s3 [shape=circle, label="q3"];
+  s4 [shape=circle, label="q4"];
+  s5 [shape=circle, label="q5"];
+  s6 [shape=circle, label="q6"];
+  s7 [shape=circle, label="q7"];
+  __start [shape=point, width=0.1];
+  __start -> s0;
+  s0 -> s2 [label="[A] ( | *\npush(2)", color=blue, style=solid, fontsize=9];
+  s2 -> s4 [label="[A] ( | *\npush(4)", color=blue, style=solid, fontsize=9];
+  s3 -> s7 [label="[A] ) | *\npush(7)", color=blue, style=solid, fontsize=9];
+  s4 -> s4 [label="[A] ( | *\npush(4)", color=blue, style=solid, fontsize=9];
+  s5 -> s6 [label="[A] ) | *\npush(6)", color=blue, style=solid, fontsize=9];
+  s0 -> s1 [label="[R] $ | 0\npush(1)", color=darkred, style=dashed, fontsize=9];
+  s2 -> s3 [label="[R] ) | 2\npush(3)", color=darkred, style=dashed, fontsize=9];
+  s4 -> s5 [label="[R] ) | 4\npush(5)", color=darkred, style=dashed, fontsize=9];
+  s6 -> s3 [label="[R] ) | 2/4/5/6\npop(3) push(3)", color=darkred, style=dashed, fontsize=9];
+  s6 -> s5 [label="[R] ) | 4/4/5/6\npop(3) push(5)", color=darkred, style=dashed, fontsize=9];
+  s7 -> s1 [label="[R] $ | 0/2/3/7\npop(3) push(1)", color=darkred, style=dashed, fontsize=9];
+}

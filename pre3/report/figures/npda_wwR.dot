@@ -1,0 +1,22 @@
+digraph NPDA {
+  rankdir=LR;
+  node [fontname="monospace"];
+  labelloc="t"; label="NPDA: wwᴿ (CFL ∖ DCFL)";
+  "q_acc" [shape=doublecircle];
+  "q_pop" [shape=circle];
+  "q_push" [shape=circle];
+  __start [shape=point, width=0.1];
+  __start -> "q_push";
+  "q_push" -> "q_push" [label="a, Z/AZ", fontsize=9];
+  "q_push" -> "q_push" [label="a, A/AA", fontsize=9];
+  "q_push" -> "q_push" [label="a, B/AB", fontsize=9];
+  "q_push" -> "q_push" [label="b, Z/BZ", fontsize=9];
+  "q_push" -> "q_push" [label="b, A/BA", fontsize=9];
+  "q_push" -> "q_push" [label="b, B/BB", fontsize=9];
+  "q_push" -> "q_pop" [label="ε, Z/Z", fontsize=9];
+  "q_push" -> "q_pop" [label="ε, A/A", fontsize=9];
+  "q_push" -> "q_pop" [label="ε, B/B", fontsize=9];
+  "q_pop" -> "q_pop" [label="a, A/ε", fontsize=9];
+  "q_pop" -> "q_pop" [label="b, B/ε", fontsize=9];
+  "q_pop" -> "q_acc" [label="ε, Z/Z", fontsize=9];
+}

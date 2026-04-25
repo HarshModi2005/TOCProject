@@ -211,17 +211,23 @@ class DPDABuilder:
         backward_paths = self._enumerate_backward_paths(origin, pop_count)
 
         for path in backward_paths:
-            # path = [s_k, ..., s_1, s_0]  where s_0 is the state after popping
+            # path = [origin, prev_1, prev_2, ..., prev_pop_count]
+            # where prev_pop_count is the EXPOSED state (the state revealed
+            # AFTER popping pop_count items).
+            # Runtime stack just before the reduction:
+            #   [..., exposed, prev_{pc-1}, ..., prev_1, origin]   (top on right)
+            # The top-anchored stack_match must include the EXPOSED state
+            # too, because the GOTO target depends on it — different exposed
+            # states require different reduction edges.
             exposed_state = path[-1]
             goto_target = self.lr1.goto_edges(exposed_state).get(production.head)
             if goto_target is None:
                 continue
 
-            # The stack_match is the portion that will be popped
-            # (top-of-stack first, so we reverse the inner path)
-            stack_match = tuple(path[:-1])
+            # Full path reversed = (exposed, prev_{pc-1}, ..., prev_1, origin)
+            stack_match = tuple(reversed(path))
 
-            visit_key = (origin, stack_match)
+            visit_key = (origin, stack_match, production, lookahead)
             if visit_key in self._visited_reductions:
                 continue
             self._visited_reductions.add(visit_key)
@@ -251,55 +257,25 @@ class DPDABuilder:
                 ops.append(StackOp.pop(pop_count))
             ops.append(StackOp.push(goto_target))
 
-            # Now merge with acceptance edges at the goto_target.
-            # If goto_target has shift edges on the lookahead, we produce
-            # a merged (reduction + acceptance) edge that accepts the
-            # lookahead symbol directly.
-            shift_target = self.lr1.shift_edges(goto_target).get(lookahead)
-
-            if shift_target is not None:
-                # Merged edge: reduce then shift in one step
-                merged_ops = list(ops) + [StackOp.push(shift_target)]
-                merged_edge = PrefixConditionedEdge(
-                    source=origin,
-                    target=shift_target,
-                    accepted_symbols=frozenset({lookahead}),
-                    stack_match=stack_match,
-                    stack_ops=tuple(merged_ops),
-                    kind=EdgeKind.REDUCTION,
-                )
-                self.dpda.add_edge(merged_edge)
-            else:
-                # Pure ε-reduction edge (no input consumed)
-                # Then try to merge with ALL acceptance edges at goto_target
-                has_merged = False
-                for sym, s_target in self.lr1.shift_edges(goto_target).items():
-                    merged_ops = list(ops) + [StackOp.push(s_target)]
-                    merged_edge = PrefixConditionedEdge(
-                        source=origin,
-                        target=s_target,
-                        accepted_symbols=frozenset({sym}),
-                        stack_match=stack_match,
-                        stack_ops=tuple(merged_ops),
-                        kind=EdgeKind.REDUCTION,
-                    )
-                    self.dpda.add_edge(merged_edge)
-                    has_merged = True
-
-                # Also chain reductions: if goto_target itself has
-                # reduce items, recurse  (Alg 1, lines 10-13)
-                for sub_item in self.lr1.reduce_items(goto_target):
-                    if sub_item.production.head == self.lr1.grammar.start:
-                        continue
-                    sub_prod = sub_item.production
-                    sub_pop = len(sub_prod.body)
-                    self._trace_reduction(
-                        origin=origin,
-                        production=sub_prod,
-                        lookahead=sub_item.lookahead,
-                        pop_count=pop_count + sub_pop,
-                        depth=depth + 1,
-                    )
+            # Always emit a "lookahead-triggered" ε-reduction edge:
+            #   accepted_symbols = {lookahead}     (the *trigger*, not consumed)
+            #   stack_match      = stack_match     (top-anchored, deep-to-top)
+            #   stack_ops        = pop(|β|), push(goto_target)
+            #   target           = goto_target
+            #
+            # The simulator interprets REDUCTION edges as "fire iff next input
+            # symbol matches accepted_symbols, but DON'T consume the symbol".
+            # Chain reductions fall out naturally: after firing this edge the
+            # simulator re-tries the same input symbol from goto_target.
+            # ACCEPTANCE edges (Step 2) consume the symbol.
+            self.dpda.add_edge(PrefixConditionedEdge(
+                source=origin,
+                target=goto_target,
+                accepted_symbols=frozenset({lookahead}),
+                stack_match=stack_match,
+                stack_ops=tuple(ops),
+                kind=EdgeKind.REDUCTION,
+            ))
 
     def _enumerate_backward_paths(
         self, state_id: int, length: int
