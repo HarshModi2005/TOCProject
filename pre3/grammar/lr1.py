@@ -228,6 +228,11 @@ class LR1Automaton:
                     action = Action(ActionType.REDUCE, production=item.production)
                     if key in self.action_table and self.action_table[key] != action:
                         existing = self.action_table[key]
+                        if existing.kind == ActionType.SHIFT:
+                            # Shift/reduce conflict: same resolution as in the
+                            # shift branch — prefer shift (e.g. dangling-else:
+                            # bind 'else' to the inner 'if').
+                            continue
                         raise ValueError(
                             f"Reduce/reduce conflict at state {state.id}, "
                             f"lookahead {item.lookahead!r}: "

@@ -117,17 +117,32 @@ assert sim.accepts(['a', 'b', 'b', 'a'])          # ✓
 assert not sim.accepts(['a', 'b', 'a'])           # ✓
 ```
 
-## How LLM-style usage plugs in (for later)
+## LLM on the left of the pipeline
 
-The left of the pipeline is intentionally a stub:
+**Stub (tests / offline):** `MockLLMSource` emits canned terminal lists.
+
+**Live (OpenAI-compatible API):** set `OPENAI_API_KEY` (optional: `OPENAI_BASE_URL`, `OPENAI_MODEL`), then run:
+
+```bash
+export OPENAI_API_KEY=sk-...
+python3 -m pre3.tools.llm_pipeline --grammar parens
+# Grammars: parens, anbn, dyck2, arith, if_else, wcwR
+python3 -m pre3.tools.llm_pipeline --challenge   # harder multi-grammar sweep (10 API calls)
+```
+
+The remote model is asked to return JSON `{"tokens": ["...", ...]}`; symbols
+not in the grammar are dropped, then the stream is checked by `DPDASimulator`
+as with the mock. Programmatically:
 
 ```python
-from pre3.adapter.mock_llm import MockLLMSource   # ← swap for a real LLM later
-from pre3.dpda.simulator   import DPDASimulator
-from pre3.dpda.builder     import build_dpda
-from pre3.grammar.lr1      import LR1Automaton
+from pre3.adapter.api_llm      import OpenAILLMSource
+from pre3.adapter.mock_llm     import MockLLMSource
+from pre3.dpda.simulator       import DPDASimulator
+from pre3.dpda.builder         import build_dpda
+from pre3.grammar.lr1          import LR1Automaton
 from pre3.grammar.grammar_loader import balanced_parens
 
+# src = OpenAILLMSource(grammar=balanced_parens(), user_messages=[...], api_key=...)
 src   = MockLLMSource([['(', ')'], ['(', ')', ')']])
 dpda  = build_dpda(LR1Automaton(balanced_parens()))
 check = DPDASimulator(dpda).accepts
@@ -136,9 +151,8 @@ for tokens in src.emit():
     print(tokens, '→', 'valid' if check(tokens) else 'invalid')
 ```
 
-When you want a real LLM, write a `RealLLMSource` that prompts the model
-and yields its tokenised output — **nothing in `pre3/grammar/`,
-`pre3/dpda/`, or `pre3/pda/` needs to change**.
+**Nothing in** `pre3/grammar/`, `pre3/dpda/`, or `pre3/pda/` **depends on the
+concrete source** — only on `StringSource.emit()`.
 
 ## Visualisation
 

@@ -1,0 +1,2094 @@
+{
+  "format_version": 2,
+  "example": "anbn",
+  "raw_input": "aaabbb",
+  "tokens": [
+    "a",
+    "a",
+    "a",
+    "b",
+    "b",
+    "b"
+  ],
+  "source": {
+    "kind": "showcase",
+    "label": "a\u207fb\u207f \u2014 aaabbb \u00b7 accept (counter)",
+    "input_mode": "raw"
+  },
+  "grammar": {
+    "start": "S",
+    "terminals": [
+      "a",
+      "b"
+    ],
+    "non_terminals": [
+      "S"
+    ],
+    "productions": [
+      "S \u2192 a S b",
+      "S \u2192 \u03b5"
+    ],
+    "production_data": [
+      {
+        "index": 0,
+        "head": "S",
+        "body": [
+          "a",
+          "S",
+          "b"
+        ]
+      },
+      {
+        "index": 1,
+        "head": "S",
+        "body": []
+      }
+    ]
+  },
+  "lr": {
+    "available": true,
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 8,
+    "automaton": {
+      "states": [
+        {
+          "id": 0,
+          "items": [
+            "[S \u2192 \u00b7 a S b, $]",
+            "[S \u2192 \u00b7, $]",
+            "[S' \u2192 \u00b7 S, $]"
+          ],
+          "is_start": true,
+          "is_accepting": false
+        },
+        {
+          "id": 1,
+          "items": [
+            "[S \u2192 a \u00b7 S b, $]",
+            "[S \u2192 \u00b7 a S b, b]",
+            "[S \u2192 \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 2,
+          "items": [
+            "[S' \u2192 S \u00b7, $]"
+          ],
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": 3,
+          "items": [
+            "[S \u2192 a \u00b7 S b, b]",
+            "[S \u2192 \u00b7 a S b, b]",
+            "[S \u2192 \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 4,
+          "items": [
+            "[S \u2192 a S \u00b7 b, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 5,
+          "items": [
+            "[S \u2192 a S b \u00b7, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 6,
+          "items": [
+            "[S \u2192 a S \u00b7 b, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 7,
+          "items": [
+            "[S \u2192 a S b \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": 0,
+          "dst": 1,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 0,
+          "dst": 2,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 1,
+          "dst": 3,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 1,
+          "dst": 4,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 4,
+          "dst": 5,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 3,
+          "dst": 3,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 3,
+          "dst": 6,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 6,
+          "dst": 7,
+          "label": "b",
+          "kind": "shift"
+        }
+      ]
+    },
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "stack_symbols_before": [],
+        "lookahead": "a",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'a' \u2192 s1",
+        "production_index": null,
+        "valid_actions": [
+          "$",
+          "a"
+        ],
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "stack_symbols_after": [
+          "a"
+        ],
+        "input_pos_before": 0,
+        "input_pos_after": 1
+      },
+      {
+        "step": 1,
+        "state_before": 1,
+        "stack_before": [
+          0,
+          1
+        ],
+        "stack_symbols_before": [
+          "a"
+        ],
+        "lookahead": "a",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'a' \u2192 s3",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 3,
+        "stack_after": [
+          0,
+          1,
+          3
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a"
+        ],
+        "input_pos_before": 1,
+        "input_pos_after": 2
+      },
+      {
+        "step": 2,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          1,
+          3
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a"
+        ],
+        "lookahead": "a",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'a' \u2192 s3",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 3,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a",
+          "a"
+        ],
+        "input_pos_before": 2,
+        "input_pos_after": 3
+      },
+      {
+        "step": 3,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a",
+          "a"
+        ],
+        "lookahead": "b",
+        "action_kind": "REDUCE",
+        "action_text": "reduce S \u2192 \u03b5",
+        "production_index": 1,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3,
+          6
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a",
+          "a",
+          "S"
+        ],
+        "input_pos_before": 3,
+        "input_pos_after": 3
+      },
+      {
+        "step": 4,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3,
+          6
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a",
+          "a",
+          "S"
+        ],
+        "lookahead": "b",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'b' \u2192 s7",
+        "production_index": null,
+        "valid_actions": [
+          "b"
+        ],
+        "state_after": 7,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3,
+          6,
+          7
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a",
+          "a",
+          "S",
+          "b"
+        ],
+        "input_pos_before": 3,
+        "input_pos_after": 4
+      },
+      {
+        "step": 5,
+        "state_before": 7,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3,
+          6,
+          7
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a",
+          "a",
+          "S",
+          "b"
+        ],
+        "lookahead": "b",
+        "action_kind": "REDUCE",
+        "action_text": "reduce S \u2192 a S b",
+        "production_index": 0,
+        "valid_actions": [
+          "b"
+        ],
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a",
+          "S"
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 4
+      },
+      {
+        "step": 6,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a",
+          "S"
+        ],
+        "lookahead": "b",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'b' \u2192 s7",
+        "production_index": null,
+        "valid_actions": [
+          "b"
+        ],
+        "state_after": 7,
+        "stack_after": [
+          0,
+          1,
+          3,
+          6,
+          7
+        ],
+        "stack_symbols_after": [
+          "a",
+          "a",
+          "S",
+          "b"
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 5
+      },
+      {
+        "step": 7,
+        "state_before": 7,
+        "stack_before": [
+          0,
+          1,
+          3,
+          6,
+          7
+        ],
+        "stack_symbols_before": [
+          "a",
+          "a",
+          "S",
+          "b"
+        ],
+        "lookahead": "b",
+        "action_kind": "REDUCE",
+        "action_text": "reduce S \u2192 a S b",
+        "production_index": 0,
+        "valid_actions": [
+          "b"
+        ],
+        "state_after": 4,
+        "stack_after": [
+          0,
+          1,
+          4
+        ],
+        "stack_symbols_after": [
+          "a",
+          "S"
+        ],
+        "input_pos_before": 5,
+        "input_pos_after": 5
+      },
+      {
+        "step": 8,
+        "state_before": 4,
+        "stack_before": [
+          0,
+          1,
+          4
+        ],
+        "stack_symbols_before": [
+          "a",
+          "S"
+        ],
+        "lookahead": "b",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'b' \u2192 s5",
+        "production_index": null,
+        "valid_actions": [
+          "b"
+        ],
+        "state_after": 5,
+        "stack_after": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "stack_symbols_after": [
+          "a",
+          "S",
+          "b"
+        ],
+        "input_pos_before": 5,
+        "input_pos_after": 6
+      },
+      {
+        "step": 9,
+        "state_before": 5,
+        "stack_before": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "stack_symbols_before": [
+          "a",
+          "S",
+          "b"
+        ],
+        "lookahead": "$",
+        "action_kind": "REDUCE",
+        "action_text": "reduce S \u2192 a S b",
+        "production_index": 0,
+        "valid_actions": [
+          "$"
+        ],
+        "state_after": 2,
+        "stack_after": [
+          0,
+          2
+        ],
+        "stack_symbols_after": [
+          "S"
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 6
+      },
+      {
+        "step": 10,
+        "state_before": 2,
+        "stack_before": [
+          0,
+          2
+        ],
+        "stack_symbols_before": [
+          "S"
+        ],
+        "lookahead": "$",
+        "action_kind": "ACCEPT",
+        "action_text": "accept",
+        "production_index": null,
+        "valid_actions": [
+          "$"
+        ],
+        "state_after": 2,
+        "stack_after": [
+          0,
+          2
+        ],
+        "stack_symbols_after": [
+          "S"
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 6
+      }
+    ],
+    "conflicts": [],
+    "is_lr1": true
+  },
+  "dpda": {
+    "available": true,
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 8,
+    "edge_count": 11,
+    "accepting_states": [
+      2
+    ],
+    "automaton": {
+      "states": [
+        {
+          "id": 0,
+          "is_start": true,
+          "is_accepting": false
+        },
+        {
+          "id": 1,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 2,
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": 3,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 4,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 5,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 6,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 7,
+          "is_start": false,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": 0,
+          "dst": 1,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(1)"
+          ]
+        },
+        {
+          "src": 1,
+          "dst": 3,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(3)"
+          ]
+        },
+        {
+          "src": 3,
+          "dst": 3,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(3)"
+          ]
+        },
+        {
+          "src": 4,
+          "dst": 5,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(5)"
+          ]
+        },
+        {
+          "src": 6,
+          "dst": 7,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(7)"
+          ]
+        },
+        {
+          "src": 0,
+          "dst": 2,
+          "kind": "REDUCTION",
+          "symbols": [
+            "$"
+          ],
+          "stack_match": [
+            0
+          ],
+          "stack_ops": [
+            "push(2)"
+          ]
+        },
+        {
+          "src": 1,
+          "dst": 4,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            1
+          ],
+          "stack_ops": [
+            "push(4)"
+          ]
+        },
+        {
+          "src": 3,
+          "dst": 6,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            3
+          ],
+          "stack_ops": [
+            "push(6)"
+          ]
+        },
+        {
+          "src": 5,
+          "dst": 2,
+          "kind": "REDUCTION",
+          "symbols": [
+            "$"
+          ],
+          "stack_match": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(2)"
+          ]
+        },
+        {
+          "src": 7,
+          "dst": 4,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            1,
+            3,
+            6,
+            7
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(4)"
+          ]
+        },
+        {
+          "src": 7,
+          "dst": 6,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            3,
+            3,
+            6,
+            7
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(6)"
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "lookahead": "a",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={a} match=[*] ops=[push(1)] \u2192 s1",
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "consumed_before": 0,
+        "consumed_after": 1,
+        "accepted_symbols": [
+          "a"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(1)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a"
+        ]
+      },
+      {
+        "step": 1,
+        "state_before": 1,
+        "stack_before": [
+          0,
+          1
+        ],
+        "lookahead": "a",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={a} match=[*] ops=[push(3)] \u2192 s3",
+        "state_after": 3,
+        "stack_after": [
+          0,
+          1,
+          3
+        ],
+        "consumed_before": 1,
+        "consumed_after": 2,
+        "accepted_symbols": [
+          "a"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(3)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 2,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          1,
+          3
+        ],
+        "lookahead": "a",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={a} match=[*] ops=[push(3)] \u2192 s3",
+        "state_after": 3,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3
+        ],
+        "consumed_before": 2,
+        "consumed_after": 3,
+        "accepted_symbols": [
+          "a"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(3)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 3,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3
+        ],
+        "lookahead": "b",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={b} match=[3] ops=[push(6)] \u2192 s6",
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3,
+          6
+        ],
+        "consumed_before": 3,
+        "consumed_after": 3,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [
+          3
+        ],
+        "stack_ops": [
+          "push(6)"
+        ],
+        "consumes_input": false,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 4,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3,
+          6
+        ],
+        "lookahead": "b",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={b} match=[*] ops=[push(7)] \u2192 s7",
+        "state_after": 7,
+        "stack_after": [
+          0,
+          1,
+          3,
+          3,
+          6,
+          7
+        ],
+        "consumed_before": 3,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(7)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "b"
+        ]
+      },
+      {
+        "step": 5,
+        "state_before": 7,
+        "stack_before": [
+          0,
+          1,
+          3,
+          3,
+          6,
+          7
+        ],
+        "lookahead": "b",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={b} match=[3,3,6,7] ops=[pop(3) push(6)] \u2192 s6",
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [
+          3,
+          3,
+          6,
+          7
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(6)"
+        ],
+        "consumes_input": false,
+        "valid_next_terminals": [
+          "b"
+        ]
+      },
+      {
+        "step": 6,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          3,
+          6
+        ],
+        "lookahead": "b",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={b} match=[*] ops=[push(7)] \u2192 s7",
+        "state_after": 7,
+        "stack_after": [
+          0,
+          1,
+          3,
+          6,
+          7
+        ],
+        "consumed_before": 4,
+        "consumed_after": 5,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(7)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "b"
+        ]
+      },
+      {
+        "step": 7,
+        "state_before": 7,
+        "stack_before": [
+          0,
+          1,
+          3,
+          6,
+          7
+        ],
+        "lookahead": "b",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={b} match=[1,3,6,7] ops=[pop(3) push(4)] \u2192 s4",
+        "state_after": 4,
+        "stack_after": [
+          0,
+          1,
+          4
+        ],
+        "consumed_before": 5,
+        "consumed_after": 5,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [
+          1,
+          3,
+          6,
+          7
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(4)"
+        ],
+        "consumes_input": false,
+        "valid_next_terminals": [
+          "b"
+        ]
+      },
+      {
+        "step": 8,
+        "state_before": 4,
+        "stack_before": [
+          0,
+          1,
+          4
+        ],
+        "lookahead": "b",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={b} match=[*] ops=[push(5)] \u2192 s5",
+        "state_after": 5,
+        "stack_after": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "consumed_before": 5,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(5)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "b"
+        ]
+      },
+      {
+        "step": 9,
+        "state_before": 5,
+        "stack_before": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "lookahead": "$",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={$} match=[0,1,4,5] ops=[pop(3) push(2)] \u2192 s2",
+        "state_after": 2,
+        "stack_after": [
+          0,
+          2
+        ],
+        "consumed_before": 6,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          "$"
+        ],
+        "stack_match": [
+          0,
+          1,
+          4,
+          5
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(2)"
+        ],
+        "consumes_input": false,
+        "valid_next_terminals": []
+      }
+    ]
+  },
+  "npda": {
+    "available": true,
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 3,
+    "transition_count": 6,
+    "automaton": {
+      "states": [
+        {
+          "id": "q",
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": "q_acc",
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": "q_start",
+          "is_start": true,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": "q_start",
+          "dst": "q",
+          "label": "\u03b5, \u22a5/S\u22a5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "\u22a5",
+          "push": [
+            "S",
+            "\u22a5"
+          ]
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "\u03b5, S/aSb",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "S",
+          "push": [
+            "a",
+            "S",
+            "b"
+          ]
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "\u03b5, S/\u03b5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "S",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "a, a/\u03b5",
+          "is_epsilon": false,
+          "input": "a",
+          "stack_top": "a",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "b, b/\u03b5",
+          "is_epsilon": false,
+          "input": "b",
+          "stack_top": "b",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q_acc",
+          "label": "\u03b5, \u22a5/\u22a5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "\u22a5",
+          "push": [
+            "\u22a5"
+          ]
+        }
+      ],
+      "alphabet": [
+        "a",
+        "b"
+      ],
+      "stack_alphabet": [
+        "S",
+        "a",
+        "b",
+        "\u22a5"
+      ],
+      "start_state": "q_start",
+      "start_stack": "\u22a5"
+    },
+    "frontier_cap": 64,
+    "steps": [
+      {
+        "step": 0,
+        "phase": "epsilon_closure",
+        "input_pos_before": 0,
+        "input_pos_after": 0,
+        "consumed_before": 0,
+        "consumed_after": 0,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 5,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 5 configs"
+      },
+      {
+        "step": 1,
+        "phase": "consume",
+        "input_pos_before": 0,
+        "input_pos_after": 1,
+        "consumed_before": 0,
+        "consumed_after": 1,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 5,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'a': 5 \u2192 1 configs"
+      },
+      {
+        "step": 2,
+        "phase": "epsilon_closure",
+        "input_pos_before": 1,
+        "input_pos_after": 1,
+        "consumed_before": 1,
+        "consumed_after": 1,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 3,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 3 configs"
+      },
+      {
+        "step": 3,
+        "phase": "consume",
+        "input_pos_before": 1,
+        "input_pos_after": 2,
+        "consumed_before": 1,
+        "consumed_after": 2,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 3,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'a': 3 \u2192 1 configs"
+      },
+      {
+        "step": 4,
+        "phase": "epsilon_closure",
+        "input_pos_before": 2,
+        "input_pos_after": 2,
+        "consumed_before": 2,
+        "consumed_after": 2,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 3,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 3 configs"
+      },
+      {
+        "step": 5,
+        "phase": "consume",
+        "input_pos_before": 2,
+        "input_pos_after": 3,
+        "consumed_before": 2,
+        "consumed_after": 3,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 3,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'a': 3 \u2192 1 configs"
+      },
+      {
+        "step": 6,
+        "phase": "epsilon_closure",
+        "input_pos_before": 3,
+        "input_pos_after": 3,
+        "consumed_before": 3,
+        "consumed_after": 3,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 3,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 3 configs"
+      },
+      {
+        "step": 7,
+        "phase": "consume",
+        "input_pos_before": 3,
+        "input_pos_after": 4,
+        "consumed_before": 3,
+        "consumed_after": 4,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b",
+              "b",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 3,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'b': 3 \u2192 1 configs"
+      },
+      {
+        "step": 8,
+        "phase": "epsilon_closure",
+        "input_pos_before": 4,
+        "input_pos_after": 4,
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 1 configs"
+      },
+      {
+        "step": 9,
+        "phase": "consume",
+        "input_pos_before": 4,
+        "input_pos_after": 5,
+        "consumed_before": 4,
+        "consumed_after": 5,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'b': 1 \u2192 1 configs"
+      },
+      {
+        "step": 10,
+        "phase": "epsilon_closure",
+        "input_pos_before": 5,
+        "input_pos_after": 5,
+        "consumed_before": 5,
+        "consumed_after": 5,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "b"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 1 configs"
+      },
+      {
+        "step": 11,
+        "phase": "consume",
+        "input_pos_before": 5,
+        "input_pos_after": 6,
+        "consumed_before": 5,
+        "consumed_after": 6,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b"
+            ],
+            "remaining": [
+              "b"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'b': 1 \u2192 1 configs"
+      },
+      {
+        "step": 12,
+        "phase": "epsilon_closure",
+        "input_pos_before": 6,
+        "input_pos_after": 6,
+        "consumed_before": 6,
+        "consumed_after": 6,
+        "lookahead": "$",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 2,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 2 configs"
+      }
+    ]
+  }
+}

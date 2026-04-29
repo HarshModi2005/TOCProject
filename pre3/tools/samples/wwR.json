@@ -1,0 +1,2388 @@
+{
+  "format_version": 2,
+  "example": "wwR",
+  "raw_input": "abba",
+  "tokens": [
+    "a",
+    "b",
+    "b",
+    "a"
+  ],
+  "source": {
+    "kind": "showcase",
+    "label": "ww\u1d3f \u2014 abba \u00b7 NPDA accepts; LR(1)/DPDA construction fails",
+    "input_mode": "raw"
+  },
+  "grammar": {
+    "start": "S",
+    "terminals": [
+      "a",
+      "b"
+    ],
+    "non_terminals": [
+      "S"
+    ],
+    "productions": [
+      "S \u2192 a S a",
+      "S \u2192 b S b",
+      "S \u2192 \u03b5"
+    ],
+    "production_data": [
+      {
+        "index": 0,
+        "head": "S",
+        "body": [
+          "a",
+          "S",
+          "a"
+        ]
+      },
+      {
+        "index": 1,
+        "head": "S",
+        "body": [
+          "b",
+          "S",
+          "b"
+        ]
+      },
+      {
+        "index": 2,
+        "head": "S",
+        "body": []
+      }
+    ]
+  },
+  "lr": {
+    "available": true,
+    "accepted": false,
+    "reason": "No action for state=4, symbol='$'",
+    "state_count": 20,
+    "automaton": {
+      "states": [
+        {
+          "id": 0,
+          "items": [
+            "[S \u2192 \u00b7 a S a, $]",
+            "[S \u2192 \u00b7 b S b, $]",
+            "[S \u2192 \u00b7, $]",
+            "[S' \u2192 \u00b7 S, $]"
+          ],
+          "is_start": true,
+          "is_accepting": false
+        },
+        {
+          "id": 1,
+          "items": [
+            "[S \u2192 a \u00b7 S a, $]",
+            "[S \u2192 \u00b7 a S a, a]",
+            "[S \u2192 \u00b7 b S b, a]",
+            "[S \u2192 \u00b7, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 2,
+          "items": [
+            "[S' \u2192 S \u00b7, $]"
+          ],
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": 3,
+          "items": [
+            "[S \u2192 b \u00b7 S b, $]",
+            "[S \u2192 \u00b7 a S a, b]",
+            "[S \u2192 \u00b7 b S b, b]",
+            "[S \u2192 \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 4,
+          "items": [
+            "[S \u2192 a \u00b7 S a, b]",
+            "[S \u2192 \u00b7 a S a, a]",
+            "[S \u2192 \u00b7 b S b, a]",
+            "[S \u2192 \u00b7, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 5,
+          "items": [
+            "[S \u2192 b S \u00b7 b, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 6,
+          "items": [
+            "[S \u2192 b \u00b7 S b, b]",
+            "[S \u2192 \u00b7 a S a, b]",
+            "[S \u2192 \u00b7 b S b, b]",
+            "[S \u2192 \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 7,
+          "items": [
+            "[S \u2192 b S \u00b7 b, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 8,
+          "items": [
+            "[S \u2192 b S b \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 9,
+          "items": [
+            "[S \u2192 b S b \u00b7, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 10,
+          "items": [
+            "[S \u2192 a \u00b7 S a, a]",
+            "[S \u2192 \u00b7 a S a, a]",
+            "[S \u2192 \u00b7 b S b, a]",
+            "[S \u2192 \u00b7, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 11,
+          "items": [
+            "[S \u2192 a S \u00b7 a, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 12,
+          "items": [
+            "[S \u2192 b \u00b7 S b, a]",
+            "[S \u2192 \u00b7 a S a, b]",
+            "[S \u2192 \u00b7 b S b, b]",
+            "[S \u2192 \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 13,
+          "items": [
+            "[S \u2192 b S \u00b7 b, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 14,
+          "items": [
+            "[S \u2192 b S b \u00b7, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 15,
+          "items": [
+            "[S \u2192 a S a \u00b7, b]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 16,
+          "items": [
+            "[S \u2192 a S \u00b7 a, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 17,
+          "items": [
+            "[S \u2192 a S a \u00b7, a]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 18,
+          "items": [
+            "[S \u2192 a S \u00b7 a, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 19,
+          "items": [
+            "[S \u2192 a S a \u00b7, $]"
+          ],
+          "is_start": false,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": 0,
+          "dst": 1,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 0,
+          "dst": 2,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 0,
+          "dst": 3,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 3,
+          "dst": 4,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 3,
+          "dst": 5,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 3,
+          "dst": 6,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 6,
+          "dst": 4,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 6,
+          "dst": 7,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 6,
+          "dst": 6,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 7,
+          "dst": 8,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 5,
+          "dst": 9,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 4,
+          "dst": 10,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 4,
+          "dst": 11,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 4,
+          "dst": 12,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 12,
+          "dst": 4,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 12,
+          "dst": 13,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 12,
+          "dst": 6,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 13,
+          "dst": 14,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 11,
+          "dst": 15,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 10,
+          "dst": 10,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 10,
+          "dst": 16,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 10,
+          "dst": 12,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 16,
+          "dst": 17,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 1,
+          "dst": 10,
+          "label": "a",
+          "kind": "shift"
+        },
+        {
+          "src": 1,
+          "dst": 18,
+          "label": "S",
+          "kind": "goto"
+        },
+        {
+          "src": 1,
+          "dst": 12,
+          "label": "b",
+          "kind": "shift"
+        },
+        {
+          "src": 18,
+          "dst": 19,
+          "label": "a",
+          "kind": "shift"
+        }
+      ]
+    },
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "stack_symbols_before": [],
+        "lookahead": "a",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'a' \u2192 s1",
+        "production_index": null,
+        "valid_actions": [
+          "$",
+          "a",
+          "b"
+        ],
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "stack_symbols_after": [
+          "a"
+        ],
+        "input_pos_before": 0,
+        "input_pos_after": 1
+      },
+      {
+        "step": 1,
+        "state_before": 1,
+        "stack_before": [
+          0,
+          1
+        ],
+        "stack_symbols_before": [
+          "a"
+        ],
+        "lookahead": "b",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'b' \u2192 s12",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 12,
+        "stack_after": [
+          0,
+          1,
+          12
+        ],
+        "stack_symbols_after": [
+          "a",
+          "b"
+        ],
+        "input_pos_before": 1,
+        "input_pos_after": 2
+      },
+      {
+        "step": 2,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          1,
+          12
+        ],
+        "stack_symbols_before": [
+          "a",
+          "b"
+        ],
+        "lookahead": "b",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'b' \u2192 s6",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          12,
+          6
+        ],
+        "stack_symbols_after": [
+          "a",
+          "b",
+          "b"
+        ],
+        "input_pos_before": 2,
+        "input_pos_after": 3
+      },
+      {
+        "step": 3,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          12,
+          6
+        ],
+        "stack_symbols_before": [
+          "a",
+          "b",
+          "b"
+        ],
+        "lookahead": "a",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'a' \u2192 s4",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 4,
+        "stack_after": [
+          0,
+          1,
+          12,
+          6,
+          4
+        ],
+        "stack_symbols_after": [
+          "a",
+          "b",
+          "b",
+          "a"
+        ],
+        "input_pos_before": 3,
+        "input_pos_after": 4
+      },
+      {
+        "step": 4,
+        "state_before": 4,
+        "stack_before": [
+          0,
+          1,
+          12,
+          6,
+          4
+        ],
+        "stack_symbols_before": [
+          "a",
+          "b",
+          "b",
+          "a"
+        ],
+        "lookahead": "$",
+        "action_kind": "ERROR",
+        "action_text": "No action for state=4, symbol='$'",
+        "production_index": null,
+        "valid_actions": [
+          "a",
+          "b"
+        ],
+        "state_after": 4,
+        "stack_after": [
+          0,
+          1,
+          12,
+          6,
+          4
+        ],
+        "stack_symbols_after": [
+          "a",
+          "b",
+          "b",
+          "a"
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 4
+      }
+    ],
+    "conflicts": [
+      {
+        "state": 1,
+        "kind": "shift/reduce",
+        "lookahead": "a",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 1: shift/reduce on 'a' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      },
+      {
+        "state": 3,
+        "kind": "shift/reduce",
+        "lookahead": "b",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 3: shift/reduce on 'b' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      },
+      {
+        "state": 4,
+        "kind": "shift/reduce",
+        "lookahead": "a",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 4: shift/reduce on 'a' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      },
+      {
+        "state": 6,
+        "kind": "shift/reduce",
+        "lookahead": "b",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 6: shift/reduce on 'b' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      },
+      {
+        "state": 10,
+        "kind": "shift/reduce",
+        "lookahead": "a",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 10: shift/reduce on 'a' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      },
+      {
+        "state": 12,
+        "kind": "shift/reduce",
+        "lookahead": "b",
+        "rules": [
+          "S \u2192 \u03b5"
+        ],
+        "message": "State 12: shift/reduce on 'b' \u2014 silently resolved as shift; reductions skipped: ['S \u2192 \u03b5']"
+      }
+    ],
+    "is_lr1": false
+  },
+  "dpda": {
+    "available": true,
+    "accepted": false,
+    "reason": "End of input in non-accepting state s4",
+    "state_count": 20,
+    "edge_count": 35,
+    "accepting_states": [
+      2
+    ],
+    "automaton": {
+      "states": [
+        {
+          "id": 0,
+          "is_start": true,
+          "is_accepting": false
+        },
+        {
+          "id": 1,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 2,
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": 3,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 4,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 5,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 6,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 7,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 8,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 9,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 10,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 11,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 12,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 13,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 14,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 15,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 16,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 17,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 18,
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": 19,
+          "is_start": false,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": 0,
+          "dst": 1,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(1)"
+          ]
+        },
+        {
+          "src": 0,
+          "dst": 3,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(3)"
+          ]
+        },
+        {
+          "src": 1,
+          "dst": 10,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(10)"
+          ]
+        },
+        {
+          "src": 1,
+          "dst": 12,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(12)"
+          ]
+        },
+        {
+          "src": 3,
+          "dst": 4,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(4)"
+          ]
+        },
+        {
+          "src": 3,
+          "dst": 6,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(6)"
+          ]
+        },
+        {
+          "src": 4,
+          "dst": 10,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(10)"
+          ]
+        },
+        {
+          "src": 4,
+          "dst": 12,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(12)"
+          ]
+        },
+        {
+          "src": 5,
+          "dst": 9,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(9)"
+          ]
+        },
+        {
+          "src": 6,
+          "dst": 4,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(4)"
+          ]
+        },
+        {
+          "src": 6,
+          "dst": 6,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(6)"
+          ]
+        },
+        {
+          "src": 7,
+          "dst": 8,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(8)"
+          ]
+        },
+        {
+          "src": 10,
+          "dst": 10,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(10)"
+          ]
+        },
+        {
+          "src": 10,
+          "dst": 12,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(12)"
+          ]
+        },
+        {
+          "src": 11,
+          "dst": 15,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(15)"
+          ]
+        },
+        {
+          "src": 12,
+          "dst": 4,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(4)"
+          ]
+        },
+        {
+          "src": 12,
+          "dst": 6,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(6)"
+          ]
+        },
+        {
+          "src": 13,
+          "dst": 14,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(14)"
+          ]
+        },
+        {
+          "src": 16,
+          "dst": 17,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(17)"
+          ]
+        },
+        {
+          "src": 18,
+          "dst": 19,
+          "kind": "ACCEPTANCE",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [],
+          "stack_ops": [
+            "push(19)"
+          ]
+        },
+        {
+          "src": 0,
+          "dst": 2,
+          "kind": "REDUCTION",
+          "symbols": [
+            "$"
+          ],
+          "stack_match": [
+            0
+          ],
+          "stack_ops": [
+            "push(2)"
+          ]
+        },
+        {
+          "src": 8,
+          "dst": 5,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            3,
+            6,
+            7,
+            8
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(5)"
+          ]
+        },
+        {
+          "src": 8,
+          "dst": 7,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            6,
+            6,
+            7,
+            8
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(7)"
+          ]
+        },
+        {
+          "src": 8,
+          "dst": 13,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            12,
+            6,
+            7,
+            8
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(13)"
+          ]
+        },
+        {
+          "src": 9,
+          "dst": 2,
+          "kind": "REDUCTION",
+          "symbols": [
+            "$"
+          ],
+          "stack_match": [
+            0,
+            3,
+            5,
+            9
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(2)"
+          ]
+        },
+        {
+          "src": 14,
+          "dst": 18,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            1,
+            12,
+            13,
+            14
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(18)"
+          ]
+        },
+        {
+          "src": 14,
+          "dst": 11,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            4,
+            12,
+            13,
+            14
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(11)"
+          ]
+        },
+        {
+          "src": 14,
+          "dst": 16,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            10,
+            12,
+            13,
+            14
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(16)"
+          ]
+        },
+        {
+          "src": 15,
+          "dst": 5,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            3,
+            4,
+            11,
+            15
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(5)"
+          ]
+        },
+        {
+          "src": 15,
+          "dst": 7,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            6,
+            4,
+            11,
+            15
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(7)"
+          ]
+        },
+        {
+          "src": 15,
+          "dst": 13,
+          "kind": "REDUCTION",
+          "symbols": [
+            "b"
+          ],
+          "stack_match": [
+            12,
+            4,
+            11,
+            15
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(13)"
+          ]
+        },
+        {
+          "src": 17,
+          "dst": 18,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            1,
+            10,
+            16,
+            17
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(18)"
+          ]
+        },
+        {
+          "src": 17,
+          "dst": 11,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            4,
+            10,
+            16,
+            17
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(11)"
+          ]
+        },
+        {
+          "src": 17,
+          "dst": 16,
+          "kind": "REDUCTION",
+          "symbols": [
+            "a"
+          ],
+          "stack_match": [
+            10,
+            10,
+            16,
+            17
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(16)"
+          ]
+        },
+        {
+          "src": 19,
+          "dst": 2,
+          "kind": "REDUCTION",
+          "symbols": [
+            "$"
+          ],
+          "stack_match": [
+            0,
+            1,
+            18,
+            19
+          ],
+          "stack_ops": [
+            "pop(3)",
+            "push(2)"
+          ]
+        }
+      ]
+    },
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "lookahead": "a",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={a} match=[*] ops=[push(1)] \u2192 s1",
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "consumed_before": 0,
+        "consumed_after": 1,
+        "accepted_symbols": [
+          "a"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(1)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 1,
+        "state_before": 1,
+        "stack_before": [
+          0,
+          1
+        ],
+        "lookahead": "b",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={b} match=[*] ops=[push(12)] \u2192 s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          1,
+          12
+        ],
+        "consumed_before": 1,
+        "consumed_after": 2,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(12)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 2,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          1,
+          12
+        ],
+        "lookahead": "b",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={b} match=[*] ops=[push(6)] \u2192 s6",
+        "state_after": 6,
+        "stack_after": [
+          0,
+          1,
+          12,
+          6
+        ],
+        "consumed_before": 2,
+        "consumed_after": 3,
+        "accepted_symbols": [
+          "b"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(6)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      },
+      {
+        "step": 3,
+        "state_before": 6,
+        "stack_before": [
+          0,
+          1,
+          12,
+          6
+        ],
+        "lookahead": "a",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={a} match=[*] ops=[push(4)] \u2192 s4",
+        "state_after": 4,
+        "stack_after": [
+          0,
+          1,
+          12,
+          6,
+          4
+        ],
+        "consumed_before": 3,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "a"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(4)"
+        ],
+        "consumes_input": true,
+        "valid_next_terminals": [
+          "a",
+          "b"
+        ]
+      }
+    ]
+  },
+  "npda": {
+    "available": true,
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 3,
+    "transition_count": 7,
+    "automaton": {
+      "states": [
+        {
+          "id": "q",
+          "is_start": false,
+          "is_accepting": false
+        },
+        {
+          "id": "q_acc",
+          "is_start": false,
+          "is_accepting": true
+        },
+        {
+          "id": "q_start",
+          "is_start": true,
+          "is_accepting": false
+        }
+      ],
+      "edges": [
+        {
+          "src": "q_start",
+          "dst": "q",
+          "label": "\u03b5, \u22a5/S\u22a5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "\u22a5",
+          "push": [
+            "S",
+            "\u22a5"
+          ]
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "\u03b5, S/aSa",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "S",
+          "push": [
+            "a",
+            "S",
+            "a"
+          ]
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "\u03b5, S/bSb",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "S",
+          "push": [
+            "b",
+            "S",
+            "b"
+          ]
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "\u03b5, S/\u03b5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "S",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "a, a/\u03b5",
+          "is_epsilon": false,
+          "input": "a",
+          "stack_top": "a",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q",
+          "label": "b, b/\u03b5",
+          "is_epsilon": false,
+          "input": "b",
+          "stack_top": "b",
+          "push": []
+        },
+        {
+          "src": "q",
+          "dst": "q_acc",
+          "label": "\u03b5, \u22a5/\u22a5",
+          "is_epsilon": true,
+          "input": "\u03b5",
+          "stack_top": "\u22a5",
+          "push": [
+            "\u22a5"
+          ]
+        }
+      ],
+      "alphabet": [
+        "a",
+        "b"
+      ],
+      "stack_alphabet": [
+        "S",
+        "a",
+        "b",
+        "\u22a5"
+      ],
+      "start_state": "q_start",
+      "start_stack": "\u22a5"
+    },
+    "frontier_cap": 64,
+    "steps": [
+      {
+        "step": 0,
+        "phase": "epsilon_closure",
+        "input_pos_before": 0,
+        "input_pos_after": 0,
+        "consumed_before": 0,
+        "consumed_after": 0,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 6,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 6 configs"
+      },
+      {
+        "step": 1,
+        "phase": "consume",
+        "input_pos_before": 0,
+        "input_pos_after": 1,
+        "consumed_before": 0,
+        "consumed_after": 1,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q_start",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "S"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": [
+              "a",
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 6,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'a': 6 \u2192 1 configs"
+      },
+      {
+        "step": 2,
+        "phase": "epsilon_closure",
+        "input_pos_before": 1,
+        "input_pos_after": 1,
+        "consumed_before": 1,
+        "consumed_after": 1,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 4,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 4 configs"
+      },
+      {
+        "step": 3,
+        "phase": "consume",
+        "input_pos_before": 1,
+        "input_pos_after": 2,
+        "consumed_before": 1,
+        "consumed_after": 2,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 4,
+        "frontier_size_after": 1,
+        "truncated": false,
+        "summary": "consume 'b': 4 \u2192 1 configs"
+      },
+      {
+        "step": 4,
+        "phase": "epsilon_closure",
+        "input_pos_before": 2,
+        "input_pos_after": 2,
+        "consumed_before": 2,
+        "consumed_after": 2,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 1,
+        "frontier_size_after": 4,
+        "truncated": false,
+        "summary": "\u03b5-closure: 1 \u2192 4 configs"
+      },
+      {
+        "step": 5,
+        "phase": "consume",
+        "input_pos_before": 2,
+        "input_pos_after": 3,
+        "consumed_before": 2,
+        "consumed_after": 3,
+        "lookahead": "b",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b"
+            ],
+            "remaining": [
+              "b",
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 4,
+        "frontier_size_after": 2,
+        "truncated": false,
+        "summary": "consume 'b': 4 \u2192 2 configs"
+      },
+      {
+        "step": 6,
+        "phase": "epsilon_closure",
+        "input_pos_before": 3,
+        "input_pos_after": 3,
+        "consumed_before": 3,
+        "consumed_after": 3,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "a"
+            ]
+          }
+        ],
+        "frontier_size_before": 2,
+        "frontier_size_after": 5,
+        "truncated": false,
+        "summary": "\u03b5-closure: 2 \u2192 5 configs"
+      },
+      {
+        "step": 7,
+        "phase": "consume",
+        "input_pos_before": 3,
+        "input_pos_after": 4,
+        "consumed_before": 3,
+        "consumed_after": 4,
+        "lookahead": "a",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "S"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": [
+              "a"
+            ]
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b"
+            ],
+            "remaining": [
+              "a"
+            ]
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "S"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_size_before": 5,
+        "frontier_size_after": 2,
+        "truncated": false,
+        "summary": "consume 'a': 5 \u2192 2 configs"
+      },
+      {
+        "step": 8,
+        "phase": "epsilon_closure",
+        "input_pos_before": 4,
+        "input_pos_after": 4,
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "lookahead": "$",
+        "frontier_before": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "S"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_after": [
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "S"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q_acc",
+            "stack": [
+              "\u22a5"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "a",
+              "S",
+              "a"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a",
+              "b",
+              "S",
+              "b"
+            ],
+            "remaining": []
+          },
+          {
+            "state": "q",
+            "stack": [
+              "\u22a5",
+              "a",
+              "b",
+              "b",
+              "a"
+            ],
+            "remaining": []
+          }
+        ],
+        "frontier_size_before": 2,
+        "frontier_size_after": 6,
+        "truncated": false,
+        "summary": "\u03b5-closure: 2 \u2192 6 configs"
+      }
+    ]
+  }
+}

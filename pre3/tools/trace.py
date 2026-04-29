@@ -24,8 +24,7 @@ from ..dpda.builder import build_dpda
 from ..dpda.edge import EdgeKind, PrefixConditionedEdge
 from ..dpda.simulator import DPDASimulator
 from ..grammar.cfg import END_MARKER, ContextFreeGrammar
-from ..grammar.lr1 import LR1Automaton
-from ..grammar.lrk import ActionType
+from ..grammar.lr1 import ActionType, LR1Automaton
 
 
 # ======================================================================
@@ -212,13 +211,16 @@ def _load_example_grammar(name: str) -> ContextFreeGrammar:
     if name == "dyck2":
         from ..examples.dyck2 import grammar
         return grammar()
+    if name == "json_demo":
+        from ..examples.json_demo import grammar
+        return grammar()
     raise SystemExit(f"unknown example: {name}")
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Step-trace LR(1) parser and DPDA simulator")
     p.add_argument("--example", required=True,
-                   choices=["balanced_parens", "arithmetic", "anbn", "wcwR", "dyck2"])
+                   choices=["balanced_parens", "arithmetic", "anbn", "wcwR", "dyck2", "json_demo"])
     p.add_argument("--input", required=True, help="raw string; whitespace-insensitive")
     p.add_argument("--mode", choices=["lr1", "dpda", "both"], default="both")
     args = p.parse_args()

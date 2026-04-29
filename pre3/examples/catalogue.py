@@ -8,7 +8,7 @@ Use as a registry for tests and demos:
         print(entry["name"], "→", entry["class"])
 """
 
-from . import anbn, anbncn, dyck2, wcwR, wwR
+from . import anbn, anbncn, dyck2, wcwR, wwR, json_demo
 
 REGISTRY = [
     {
@@ -50,5 +50,13 @@ REGISTRY = [
         "is_cfl": False,
         "is_dcfl": False,
         "lrk_buildable": False,    # has no grammar at all
+    },
+    {
+        "name": "JSON (Simplified)",
+        "class": "DCFL",
+        "module": json_demo,
+        "is_cfl": True,
+        "is_dcfl": True,
+        "lrk_buildable": True,
     },
 ]

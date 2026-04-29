@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pre³ — NPDA · LR(1) · DPDA Visualizer</title>
+  <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-0: #03050a;
+      --bg-1: rgba(11, 19, 34, 0.5);
+      --bg-2: rgba(17, 32, 58, 0.4);
+      --bg-3: rgba(26, 44, 74, 0.6);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-soft: rgba(255, 255, 255, 0.04);
+      --text: #ffffff;
+      --muted: #a3b8cc;
+      --dim: #5c6c8a;
+      --accent: #5e81ff;
+      --ok: #00ffaa;
+      --bad: #ff3864;
+      --warn: #ffb800;
+      --shift: #00d2ff;
+      --redu: #ff7b00;
+      --acc: #00ffaa;
+      --dred: #b05cff;
+      --eps: #829ab1;
+      --hl-npda: #ff3385;
+      --hl-lr: #00c3ff;
+      --hl-dp: #ffcc00;
+      
+      --glass-bg: rgba(9, 13, 24, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg-0);
+      color: var(--text);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background:
+        radial-gradient(1200px 800px at 15% 0%, rgba(32, 54, 110, 0.4) 0%, transparent 60%),
+        radial-gradient(1000px 800px at 85% 20%, rgba(85, 30, 95, 0.25) 0%, transparent 55%),
+        radial-gradient(800px 500px at 50% 100%, rgba(0, 200, 255, 0.08) 0%, transparent 60%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .wrap { max-width: 1680px; margin: 0 auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    
+    h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+    
+    /* GLASSMORPHISM PANELS */
+    .panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 16px 20px;
+      box-shadow: var(--glass-shadow);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .panel:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .panel h4 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 800; }
+
+    /* TITLEBAR */
+    .titlebar {
+      display: flex; align-items: center; gap: 16px;
+      padding: 0 8px;
+    }
+    .brand {
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .brand .pre {
+      font-size: 1.8rem; font-weight: 800;
+      background: linear-gradient(135deg, #00c3ff, #b05cff, #ff3385);
+      background-size: 200% 200%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+      animation: gradient-shift 6s ease infinite;
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .brand small { color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; }
+    
+    /* TOOLBAR */
+    .toolbar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      box-shadow: var(--glass-shadow);
+    }
+    button, select, input[type="file"] {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--text);
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    button:hover, select:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+    
+    button.primary {
+      background: linear-gradient(135deg, #2563eb, #8b5cf6);
+      border: none;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    button.primary:hover {
+      background: linear-gradient(135deg, #3b82f6, #a78bfa);
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      flex: 1; min-width: 180px; height: 6px;
+      background: rgba(255,255,255,0.1); border-radius: 3px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+      transition: transform 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    kbd {
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; padding: 2px 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+      color: var(--muted); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
+    }
+
+    /* GRID LAYOUTS */
+    .top-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; margin-bottom: 16px; }
+    
+    .runhdr .kv {
+      display: grid; grid-template-columns: max-content 1fr;
+      column-gap: 16px; row-gap: 8px; font-size: 13px; color: #ddd;
+    }
+    .runhdr .kv .k { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; align-self: center; }
+    
+    .verdicts { display: flex; flex-wrap: wrap; gap: 10px; }
+    .verdict {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 12px;
+      background: rgba(0,0,0,0.3); border: 1px solid var(--line);
+      font-size: 13px; backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .verdict.ok { border: 1px solid rgba(0, 255, 170, 0.4); box-shadow: 0 0 16px rgba(0, 255, 170, 0.1) inset; }
+    .verdict.bad { border: 1px solid rgba(255, 56, 100, 0.4); box-shadow: 0 0 16px rgba(255, 56, 100, 0.1) inset; }
+    .verdict .name { font-weight: 800; }
+    
+    .v-tag { font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .v-tag.ok { color: #000; background: var(--ok); text-shadow: none; }
+    .v-tag.bad { color: #fff; background: var(--bad); }
+
+    /* TOKEN TAPE - STUNNING GLOW */
+    .tape-container { display: flex; flex-direction: column; overflow: hidden; position: relative; }
+    .tape {
+      display: flex; flex-wrap: nowrap; gap: 10px;
+      overflow-x: auto; padding: 20px 8px 36px;
+      scroll-behavior: smooth;
+    }
+    .tape::-webkit-scrollbar { height: 6px; }
+    .tok {
+      flex: 0 0 auto; min-width: 44px; height: 48px; line-height: 44px;
+      text-align: center; font-family: 'JetBrains Mono', monospace;
+      font-size: 18px; font-weight: 700;
+      background: rgba(17, 32, 58, 0.6);
+      border: 2px solid var(--line); border-radius: 12px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      color: #fff;
+    }
+    .tok.consumed { opacity: 0.4; transform: scale(0.95); border-color: transparent; background: rgba(255,255,255,0.05); }
+    .tok:hover { transform: translateY(-4px) scale(1.05); border-color: rgba(255,255,255,0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 10; opacity: 1;}
+    
+    .tok.h-npda { border-color: var(--hl-npda); box-shadow: 0 0 0 2px rgba(255, 51, 133, 0.2) inset, 0 0 20px rgba(255, 51, 133, 0.4); background: rgba(255, 51, 133, 0.1); transform: translateY(-2px); }
+    .tok.h-lr   { border-color: var(--hl-lr); box-shadow: 0 0 0 2px rgba(0, 195, 255, 0.2) inset, 0 0 20px rgba(0, 195, 255, 0.4); background: rgba(0, 195, 255, 0.1); transform: translateY(-2px); }
+    .tok.h-dp   { border-color: var(--hl-dp); box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.2) inset, 0 0 20px rgba(255, 204, 0, 0.4); background: rgba(255, 204, 0, 0.1); transform: translateY(-2px); }
+    
+    .tok-marks {
+      position: absolute; left: 0; right: 0; bottom: -26px; height: 20px;
+      display: flex; justify-content: center; gap: 4px; font-size: 11px;
+    }
+    .tok-marks .m { padding: 2px 6px; border-radius: 4px; font-weight: 800; font-family: 'Outfit'; animation: pop 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    .tok-marks .m.npda { color: #fff; background: var(--hl-npda); box-shadow: 0 2px 8px rgba(255, 51, 133, 0.5); }
+    .tok-marks .m.lr   { color: #000; background: var(--hl-lr); box-shadow: 0 2px 8px rgba(0, 195, 255, 0.5); }
+    .tok-marks .m.dp   { color: #000; background: var(--hl-dp); box-shadow: 0 2px 8px rgba(255, 204, 0, 0.5); }
+
+    .legend { display: flex; gap: 16px; margin-top: 4px; font-size: 12px; font-weight: 500; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px currentColor; }
+    .dot.npda { background: var(--hl-npda); color: var(--hl-npda); }
+    .dot.lr   { background: var(--hl-lr); color: var(--hl-lr); }
+    .dot.dp   { background: var(--hl-dp); color: var(--hl-dp); }
+
+    /* STEP CONTROLLER */
+    .ctrl { display: grid; grid-template-columns: max-content max-content 1fr max-content max-content max-content; gap: 12px; align-items: center; margin-bottom: 16px; }
+    .progrow { display: grid; grid-template-columns: 40px 1fr 60px; gap: 12px; align-items: center; font-size: 12px; margin-top: 8px; }
+    .progrow .tag { font-weight: 800; letter-spacing: 0.1em; }
+    .progrow .tag.npda { color: var(--hl-npda); text-shadow: 0 0 10px rgba(255, 51, 133, 0.5); }
+    .progrow .tag.lr   { color: var(--hl-lr); text-shadow: 0 0 10px rgba(0, 195, 255, 0.5); }
+    .progrow .tag.dp   { color: var(--hl-dp); text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+    
+    .prog { height: 8px; background: rgba(0,0,0,0.5); border-radius: 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.6); overflow: hidden; position: relative; }
+    .prog > i { display: block; height: 100%; width: 0%; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 10px currentColor; }
+    .prog.npda > i { background: linear-gradient(90deg, #ff3385, #b05cff); color: #ff3385; }
+    .prog.lr   > i { background: linear-gradient(90deg, #00c3ff, #00ffaa); color: #00c3ff; }
+    .prog.dp   > i { background: linear-gradient(90deg, #ffcc00, #ff7b00); color: #ffcc00; }
+    .progrow .lab { text-align: right; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono'; color: var(--muted); }
+
+    /* MACHINE PANES */
+    .machines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+    @media (max-width: 1200px) { .machines { grid-template-columns: 1fr; } }
+    
+    .machine { padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .m-head {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--glass-border);
+      position: relative;
+    }
+    .m-head::after { content: ""; position: absolute; bottom: -1px; left: 0; width: 100%; height: 1px; }
+    .npda .m-head::after { background: linear-gradient(90deg, transparent, var(--hl-npda), transparent); }
+    .lr .m-head::after { background: linear-gradient(90deg, transparent, var(--hl-lr), transparent); }
+    .dp .m-head::after { background: linear-gradient(90deg, transparent, var(--hl-dp), transparent); }
+    
+    .m-head .name { font-weight: 800; font-size: 15px; letter-spacing: 0.05em; }
+    .m-head .name.npda { color: var(--hl-npda); text-shadow: 0 0 12px rgba(255, 51, 133, 0.4); }
+    .m-head .name.lr   { color: var(--hl-lr); text-shadow: 0 0 12px rgba(0, 195, 255, 0.4); }
+    .m-head .name.dp   { color: var(--hl-dp); text-shadow: 0 0 12px rgba(255, 204, 0, 0.4); }
+    .m-head .sub { color: var(--muted); font-size: 12px; opacity: 0.8; }
+    .m-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+
+    /* GRAPHS */
+    .graph {
+      width: 100%; height: 260px;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+      border-radius: 12px;
+      box-shadow: inset 0 2px 16px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+    }
+    .graph::before {
+      content: ""; position: absolute; top:0; left:0; width: 100%; height: 100%; pointer-events: none;
+      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.3) 100%);
+      z-index: 10;
+    }
+
+    /* VISUAL STACKS */
+    .stack {
+      display: flex; flex-direction: column-reverse; align-items: center; gap: 4px;
+      padding: 12px; background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; min-height: 90px;
+      position: relative; overflow: hidden;
+    }
+    .stack-label { position: absolute; top: 8px; left: 12px; font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+    .stack .item {
+      min-width: 48px; padding: 6px 12px; text-align: center;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: stack-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .stack .item.top {
+      background: rgba(0, 195, 255, 0.15); border-color: rgba(0, 195, 255, 0.5);
+      color: #fff; box-shadow: 0 0 16px rgba(0, 195, 255, 0.3);
+    }
+    .dp .stack .item.top { background: rgba(255, 204, 0, 0.15); border-color: rgba(255, 204, 0, 0.5); box-shadow: 0 0 16px rgba(255, 204, 0, 0.3); }
+    @keyframes stack-in { from { transform: translateY(-10px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+    /* PRE CODE BLOCKS */
+    .pre {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6;
+      color: #cbd5e1; background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; padding: 12px; margin: 0;
+      white-space: pre-wrap; word-break: break-word;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* CHIPS & BADGES */
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px;
+      border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    .chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      padding: 4px 10px; border-radius: 8px; text-transform: uppercase;
+    }
+    .badge.shift { background: rgba(0, 195, 255, 0.15); color: var(--shift); border: 1px solid rgba(0, 195, 255, 0.3); }
+    .badge.redu  { background: rgba(255, 123, 0, 0.15); color: var(--redu); border: 1px solid rgba(255, 123, 0, 0.3); }
+    .badge.acc   { background: rgba(0, 255, 170, 0.15); color: var(--acc); border: 1px solid rgba(0, 255, 170, 0.3); box-shadow: 0 0 12px rgba(0,255,170,0.2); }
+    .badge.dred  { background: rgba(176, 92, 255, 0.15); color: var(--dred); border: 1px solid rgba(176, 92, 255, 0.3); }
+    .badge.eps   { background: rgba(130, 154, 177, 0.15); color: var(--eps); border: 1px solid rgba(130, 154, 177, 0.3); }
+
+    /* NPDA FRONTIER */
+    .frontier { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; max-height: 280px; overflow: auto; padding: 4px; }
+    .frontier::-webkit-scrollbar { width: 6px; }
+    .fc {
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px;
+      transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .fc:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+    .fc.new { border-color: rgba(255, 51, 133, 0.5); box-shadow: 0 0 20px rgba(255, 51, 133, 0.2); animation: fc-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .fc .fc-state { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); font-weight: 800; }
+    .fc .fc-stack { display: flex; flex-direction: row-reverse; gap: 4px; flex-wrap: wrap; }
+    .fc .fc-stack .s { padding: 2px 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .fc .fc-rem { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); opacity: 0.8; }
+
+    /* LR ITEMS */
+    .items { max-height: 160px; overflow: auto; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #cbd5e1; }
+    .items .it { padding: 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid rgba(255,255,255,0.02); }
+    .items .it:last-child { border-bottom: none; }
+    .items .it.reduce { color: var(--redu); text-shadow: 0 0 8px rgba(255,123,0,0.4); }
+    .items .it.accept { color: var(--acc); text-shadow: 0 0 8px rgba(0,255,170,0.4); }
+
+    /* BOTTOM PANELS */
+    .bottomrow { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; margin-top: 16px;}
+    @media (max-width: 980px) { .bottomrow { grid-template-columns: 1fr; } }
+    
+    .productions { list-style: none; padding: 0; margin: 8px 0 0; }
+    .productions li {
+      padding: 8px 12px; margin: 6px 0;
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .productions li.active {
+      background: rgba(0, 195, 255, 0.1); border-color: rgba(0, 195, 255, 0.5);
+      color: #fff; box-shadow: 0 0 20px rgba(0, 195, 255, 0.2), inset 0 0 10px rgba(0,195,255,0.1);
+      transform: translateX(6px) scale(1.01);
+    }
+    
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; border: 2px solid transparent; background-clip: padding-box; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); border: 2px solid transparent; background-clip: padding-box; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    
+    .help { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.6; opacity: 0.8; }
+    
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .col { display: flex; flex-direction: column; gap: 12px; }
+    .grow { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!--  Title bar  -->
+    <div class="titlebar">
+      <div class="brand">
+        <span class="pre">Pre³</span>
+        <small>NPDA · LR(1) · DPDA VISUALIZER</small>
+      </div>
+      <span style="flex: 1"></span>
+      <span class="muted" style="font-size: 12px; font-weight: 500;">
+        <kbd>←</kbd> <kbd>→</kbd> step &nbsp;&nbsp; <kbd>Space</kbd> play/pause &nbsp;&nbsp;
+        <kbd>R</kbd> reset
+      </span>
+    </div>
+
+    <!--  Toolbar  -->
+    <div class="toolbar panel" style="border-radius: 16px;">
+      <input id="file" type="file" accept=".json,application/json" title="Load trace.json" style="width: auto;" />
+      <select id="sample" title="Load a bundled sample" style="min-width: 220px;">
+        <option value="">— bundled samples —</option>
+      </select>
+      <select id="bundlePick" style="display:none; min-width: 220px;"></select>
+      <span style="flex: 1"></span>
+      <div style="display: inline-flex; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 2px; border: 1px solid rgba(255,255,255,0.05);">
+        <button id="layoutCircle" class="on" style="background: transparent; border: none; box-shadow: none;">circle</button>
+        <button id="layoutBreadth" style="background: transparent; border: none; box-shadow: none;">tree</button>
+        <button id="layoutCose" style="background: transparent; border: none; box-shadow: none;">force</button>
+      </div>
+      <button id="reset" title="Reset to step 0">Reset</button>
+    </div>
+
+    <!--  Top Grid -->
+    <div class="top-grid">
+      <div class="panel runhdr" style="margin-bottom: 0; display: block;">
+        <h4>Run</h4>
+        <div class="kv">
+          <div class="k">Example</div>      <div id="metaExample" style="color: #fff; font-family: 'JetBrains Mono', monospace;">—</div>
+          <div class="k">Raw input</div>    <div id="metaInput" style="color: #fff; font-family: 'JetBrains Mono', monospace;">—</div>
+          <div class="k">Source</div>       <div id="metaSource">—</div>
+          <div class="k">Source label</div> <div id="metaModel">—</div>
+        </div>
+        <div id="sourcePromptWrap" style="display:none; margin-top:12px;">
+          <h4>Prompt / note</h4>
+          <pre class="pre" id="sourcePrompt"></pre>
+        </div>
+      </div>
+      <div class="panel" style="display: block;">
+        <h4>Verdict</h4>
+        <div class="verdicts" id="verdicts"></div>
+        <div class="muted" id="reasons" style="margin-top:12px; font-size:12px; line-height:1.6; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 8px;"></div>
+      </div>
+    
+      <div class="panel tape-container">
+        <h4>Input token stream</h4>
+        <div id="tape" class="tape"></div>
+        <div class="legend" style="margin-top: 12px;">
+          <span><span class="dot npda"></span>NPDA frontier head</span>
+          <span><span class="dot lr"></span>LR(1) lookahead</span>
+          <span><span class="dot dp"></span>DPDA consumed</span>
+        </div>
+      </div>
+    </div>
+
+    <!--  Step controller -->
+    <div class="panel" style="margin-bottom: 16px;">
+      <h4>Linked step sequence</h4>
+      <div class="ctrl">
+        <button id="prev" title="Previous step">◀</button>
+        <button id="play" class="primary" style="padding: 10px 24px; font-size: 14px; letter-spacing: 0.05em; font-weight: 800;">Play</button>
+        <button id="next" title="Next step">▶</button>
+        <input id="step" type="range" min="0" max="0" value="0" style="margin: 0 16px;" />
+        <select id="speed" title="Autoplay speed" style="width: auto;">
+          <option value="1100">0.5×</option>
+          <option value="650" selected>1×</option>
+          <option value="320">2×</option>
+          <option value="140">4×</option>
+        </select>
+        <span id="stepLabel" class="muted" style="min-width: 48px; text-align: right; font-family: 'JetBrains Mono'; color: #fff;">0 / 0</span>
+      </div>
+      <div class="col" style="margin-top: 4px;">
+        <div class="progrow"><span class="tag npda">NPDA</span><div class="prog npda"><i id="pNpda"></i></div><span class="lab" id="lNpda">0/0</span></div>
+        <div class="progrow"><span class="tag lr">LR</span><div class="prog lr"><i id="pLr"></i></div><span class="lab" id="lLr">0/0</span></div>
+        <div class="progrow"><span class="tag dp">DPDA</span><div class="prog dp"><i id="pDp"></i></div><span class="lab" id="lDp">0/0</span></div>
+      </div>
+    </div>
+
+    <!--  Three machines -->
+    <div class="machines">
+      <!-- NPDA pane -->
+      <section class="panel machine">
+        <header class="m-head">
+          <span class="name npda">NPDA</span>
+          <span class="sub">non-deterministic · CFG → NPDA</span>
+          <span class="grow"></span>
+          <span id="npdaSummary" class="muted" style="font-size:12px; font-family: 'JetBrains Mono';"></span>
+        </header>
+        <div class="m-body">
+          <div id="npdaGraph" class="graph"></div>
+          <div class="row" style="justify-content: space-between;">
+            <span class="badge" style="background: rgba(94, 129, 255, 0.15); color: #5e81ff; border: 1px solid rgba(94, 129, 255, 0.3);" id="npdaPhase">phase: —</span>
+            <span class="muted" style="font-size: 11px; font-family: 'JetBrains Mono';">
+              Frontier: <strong id="npdaFrontierCount" style="color:#fff;">—</strong>
+              <span id="npdaTrunc"></span>
+            </span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column;">
+            <h4>Live configurations</h4>
+            <div id="npdaFrontier" class="frontier" style="flex: 1;"></div>
+          </div>
+          <div>
+              <h4>Step detail</h4>
+              <pre class="pre" id="npdaDetail">—</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- LR(1) pane -->
+      <section class="panel machine">
+        <header class="m-head">
+          <span class="name lr">LR(1)</span>
+          <span class="sub">deterministic shift-reduce</span>
+          <span class="grow"></span>
+          <span id="lrSummary" class="muted" style="font-size:12px; font-family: 'JetBrains Mono';"></span>
+        </header>
+        <div class="m-body">
+          <div id="lrGraph" class="graph"></div>
+          <div class="row" style="justify-content: space-between;">
+            <span id="lrBadge" class="badge" style="visibility: hidden;">—</span>
+            <span class="muted" style="font-size:12px; font-family: 'JetBrains Mono';">state <strong id="lrState" style="color: #fff; font-size: 14px;">—</strong></span>
+          </div>
+          <div class="row" style="align-items: stretch; gap: 12px; flex: 1;">
+            <div style="flex: 0.8; display: flex; flex-direction: column;">
+              <h4>Stack</h4>
+              <div id="lrStack" class="stack" style="flex: 1;">
+                <div class="stack-label">TOP</div>
+              </div>
+            </div>
+            <div style="flex: 1.2; display: flex; flex-direction: column;">
+              <h4>Current State Item Set</h4>
+              <div id="lrItems" class="items" style="flex: 1;"></div>
+            </div>
+          </div>
+          <div>
+            <h4>Step detail</h4>
+            <pre class="pre" id="lrDetail">—</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- DPDA pane -->
+      <section class="panel machine">
+        <header class="m-head">
+          <span class="name dp">DPDA</span>
+          <span class="sub">prefix-conditioned mask</span>
+          <span class="grow"></span>
+          <span id="dpSummary" class="muted" style="font-size:12px; font-family: 'JetBrains Mono';"></span>
+        </header>
+        <div class="m-body">
+          <div id="dpGraph" class="graph"></div>
+          <div class="row" style="justify-content: space-between;">
+            <span id="dpBadge" class="badge" style="visibility: hidden;">—</span>
+            <span class="muted" style="font-size:12px; font-family: 'JetBrains Mono';">state <strong id="dpState" style="color: #fff; font-size: 14px;">—</strong></span>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column;">
+            <h4>Stack</h4>
+            <div id="dpStack" class="stack" style="flex: 1; justify-content: center;">
+              <div class="stack-label">TOP</div>
+            </div>
+          </div>
+          <div style="margin-top: 4px;">
+            <h4>Predicted next terminals (Mask)</h4>
+            <div id="dpMask" class="chips" style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); min-height: 44px;"></div>
+          </div>
+          <div>
+            <h4>Step detail</h4>
+            <pre class="pre" id="dpDetail">—</pre>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!--  Bottom row -->
+    <div class="bottomrow">
+      <div class="panel">
+        <h4>Grammar</h4>
+        <ul id="productions" class="productions"></ul>
+      </div>
+      <div class="panel">
+        <h4>Symbols</h4>
+        <div class="runhdr .kv" style="display:grid; grid-template-columns: 120px 1fr; column-gap: 16px; row-gap: 12px; font-size:13px;">
+          <div class="muted" style="font-weight: 700; font-size: 11px; align-self: center; letter-spacing: 0.1em; text-transform: uppercase;">START SYMBOL</div>       <div id="gStart" style="font-family: 'JetBrains Mono'; font-weight: 700; color: #fff; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; display: inline-block; width: max-content;">—</div>
+          <div class="muted" style="font-weight: 700; font-size: 11px; align-self: center; letter-spacing: 0.1em; text-transform: uppercase;">TERMINALS</div>   <div id="gTerms" class="chips"></div>
+          <div class="muted" style="font-weight: 700; font-size: 11px; align-self: center; letter-spacing: 0.1em; text-transform: uppercase;">NON-TERMINALS</div><div id="gNTs" class="chips"></div>
+        </div>
+        <p class="help">
+          Drop your <code>trace.json</code> on this page to load it. Schema v2 traces include deterministic execution via LR(1) mapped uniquely into a Prefix-Conditioned DPDA, maintaining deterministic validation masks at every step.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!--  Logic  -->
+  <script>
+    "use strict";
+
+    let trace = null;
+    let bundle = [];
+    let stepIdx = 0;
+    let timer = null;
+    let cyNpda = null, cyLr = null, cyDp = null;
+    let layoutMode = "circle";
+
+    const el = (id) => document.getElementById(id);
+    const has = (o, k) => o != null && Object.prototype.hasOwnProperty.call(o, k);
+
+    const SAMPLES = [
+      { id: "parens",   label: "balanced parens — (())",        url: "samples/parens.json" },
+      { id: "parens_bad", label: "balanced parens — (() (invalid)", url: "samples/parens_bad.json" },
+      { id: "arith",    label: "arithmetic — id+id*id",          url: "samples/arith.json" },
+      { id: "wcwR",     label: "wcwᴿ — abcba (DCFL)",             url: "samples/wcwR.json" },
+      { id: "wwR",      label: "wwᴿ — abba (CFL ∖ DCFL)",         url: "samples/wwR.json" },
+      { id: "anbn",     label: "aⁿbⁿ — aaabbb",                   url: "samples/anbn.json" },
+    ];
+
+    function fillSampleSelect() {
+      const s = el("sample");
+      SAMPLES.forEach(x => {
+        const o = document.createElement("option");
+        o.value = x.url; o.textContent = x.label;
+        s.appendChild(o);
+      });
+    }
+
+    /* ----------- step model ------------------------------------------- */
+    /* The "linked logical step" simply uses the same index across
+       LR / DPDA / NPDA, clamped per machine.  Each machine's own
+       progress bar shows how far it is in its own sequence.           */
+    function lrSteps()  { return (trace && trace.lr   && trace.lr.steps)   || []; }
+    function dpSteps()  { return (trace && trace.dpda && trace.dpda.steps) || []; }
+    function npSteps()  { return (trace && trace.npda && trace.npda.steps) || []; }
+    function maxIdx()   { return Math.max(0, Math.max(lrSteps().length, dpSteps().length, npSteps().length) - 1); }
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function lrI() { return clamp(stepIdx, 0, Math.max(0, lrSteps().length - 1)); }
+    function dpI() { return clamp(stepIdx, 0, Math.max(0, dpSteps().length - 1)); }
+    function npI() { return clamp(stepIdx, 0, Math.max(0, npSteps().length - 1)); }
+
+    /* ----------- token tape ------------------------------------------- */
+    function lrTokenIdx() {
+      const s = lrSteps()[lrI()]; if (!s) return 0;
+      const n = (trace.tokens || []).length;
+      if (s.lookahead === "$") return n;
+      return clamp(s.input_pos_before, 0, n);
+    }
+    function dpTokenIdx() {
+      const s = dpSteps()[dpI()]; if (!s) return 0;
+      const n = (trace.tokens || []).length;
+      return clamp(s.consumed_after, 0, n);
+    }
+    function npTokenIdx() {
+      const s = npSteps()[npI()]; if (!s) return 0;
+      const n = (trace.tokens || []).length;
+      return clamp(s.consumed_after !== undefined ? s.consumed_after : s.input_pos_after, 0, n);
+    }
+
+    function renderTape() {
+      const root = el("tape"); root.innerHTML = "";
+      if (!trace) return;
+      const toks = trace.tokens || [];
+      const a = npTokenIdx(), b = lrTokenIdx(), c = dpTokenIdx();
+      const minIdx = Math.min(a, b, c);
+      const make = (txt, isEof) => {
+        const w = document.createElement("div");
+        w.className = "tok" + (isEof ? " eof" : "");
+        w.textContent = txt;
+        return w;
+      };
+      const all = [...toks, "$"];
+      all.forEach((t, i) => {
+        const w = make(t, i === all.length - 1);
+        if (i < minIdx) w.classList.add("consumed");
+        if (i === a) w.classList.add("h-npda");
+        if (i === b) w.classList.add("h-lr");
+        if (i === c) w.classList.add("h-dp");
+        const marks = document.createElement("div"); marks.className = "tok-marks";
+        if (i === a) { const e = document.createElement("span"); e.className = "m npda"; e.textContent = "N"; marks.appendChild(e); }
+        if (i === b) { const e = document.createElement("span"); e.className = "m lr";   e.textContent = "L"; marks.appendChild(e); }
+        if (i === c) { const e = document.createElement("span"); e.className = "m dp";   e.textContent = "D"; marks.appendChild(e); }
+        w.appendChild(marks);
+        root.appendChild(w);
+      });
+    }
+
+    /* ----------- run header ------------------------------------------- */
+    function renderHeader() {
+      el("metaExample").textContent = trace.example || "—";
+      el("metaInput").textContent = trace.raw_input || (trace.tokens || []).join(" ");
+      const src = trace.source || {};
+      el("metaSource").textContent = src.kind === "llm"
+        ? `LLM ${src.backend || ""}${src.prompt_index ? " #" + src.prompt_index : ""}`.trim()
+        : (src.input_mode || src.kind || "manual");
+      el("metaModel").textContent = (src.model || src.label || "—");
+      if (src.prompt || src.label) {
+        el("sourcePromptWrap").style.display = "block";
+        el("sourcePrompt").textContent = src.prompt || src.label || "—";
+      } else {
+        el("sourcePromptWrap").style.display = "none";
+      }
+
+      const verd = el("verdicts"); verd.innerHTML = "";
+      const reasons = [];
+      const reasonLine = (k, v) => v ? `<strong style="color:var(--text)">${k}:</strong> ${v}` : null;
+
+      function pill(name, block, color) {
+        const v = document.createElement("div");
+        if (!block || !block.available) {
+          v.className = "verdict unavail";
+          v.innerHTML = `<span class="name" style="color:${color}">${name}</span><span class="v-tag na">N/A</span>`;
+          if (block && block.error) reasons.push(reasonLine(name, block.error));
+        } else {
+          const ok = block.accepted;
+          v.className = "verdict " + (ok ? "ok" : "bad");
+          v.innerHTML = `<span class="name" style="color:${color}">${name}</span><span class="v-tag ${ok ? "ok" : "bad"}">${ok ? "ACCEPT" : "REJECT"}</span>`;
+          if (block.reason && !ok) reasons.push(reasonLine(name, block.reason));
+        }
+        verd.appendChild(v);
+      }
+      pill("NPDA",  trace.npda, "var(--hl-npda)");
+      pill("LR(1)", trace.lr,   "var(--hl-lr)");
+      pill("DPDA",  trace.dpda, "var(--hl-dp)");
+
+      // LR conflict warnings
+      const conflicts = (trace.lr && trace.lr.conflicts) || [];
+      if (trace.lr && trace.lr.available && conflicts.length) {
+        const head = `<strong style="color:var(--warn)">⚠ ${conflicts.length} ${conflicts.length === 1 ? "conflict" : "conflicts"} in LR(1) tables (grammar is not LR(1)):</strong>`;
+        const items = conflicts.slice(0, 4).map(c => `&nbsp;&nbsp;• ${escapeHtml(c.message)}`);
+        if (conflicts.length > 4) items.push(`&nbsp;&nbsp;…and ${conflicts.length - 4} more`);
+        reasons.unshift(head + "<br/>" + items.join("<br/>"));
+      }
+      el("reasons").innerHTML = reasons.filter(Boolean).join("<br/>");
+
+      const g = trace.grammar || {};
+      el("gStart").textContent = g.start || "—";
+      el("gTerms").innerHTML = (g.terminals || []).map(t => `<span class="chip">${escapeHtml(t)}</span>`).join(" ");
+      el("gNTs").innerHTML   = (g.non_terminals || []).map(t => `<span class="chip note">${escapeHtml(t)}</span>`).join(" ");
+
+      const ul = el("productions"); ul.innerHTML = "";
+      (g.productions || []).forEach((p, idx) => {
+        const li = document.createElement("li");
+        li.dataset.idx = String(idx);
+        li.textContent = p;
+        ul.appendChild(li);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    }
+
+    /* ----------- machine summaries ------------------------------------ */
+    function renderMachineSummaries() {
+      const lr = trace.lr || {};
+      const dp = trace.dpda || {};
+      const np = trace.npda || {};
+      el("lrSummary").textContent = lr.available ? `${lr.state_count} states · ${lrSteps().length} steps` : "unavailable";
+      el("dpSummary").textContent = dp.available ? `${dp.state_count} states · ${dp.edge_count} edges · ${dpSteps().length} steps` : "unavailable";
+      el("npdaSummary").textContent = np.available ? `${np.state_count} states · ${np.transition_count || 0} transitions` : "unavailable";
+    }
+
+    /* ----------- Cytoscape graph helpers ------------------------------ */
+    function destroyGraph(c) { try { if (c) c.destroy(); } catch (_) {} return null; }
+
+    function layoutFor(mode) {
+      if (mode === "breadth") return { name: "breadthfirst", directed: true, padding: 18, spacingFactor: 1.1 };
+      if (mode === "cose")    return { name: "cose", padding: 14, animate: false, idealEdgeLength: 90, nodeRepulsion: 8000 };
+      return { name: "circle", padding: 18 };
+    }
+
+    function makeGraph(container, automaton, kind) {
+      const states = automaton && automaton.states ? automaton.states : [];
+      const edges  = automaton && automaton.edges  ? automaton.edges  : [];
+      if (!states.length) {
+        container.innerHTML = '<div class="empty-msg">No automaton — construction unavailable for this grammar/input.</div>';
+        return null;
+      }
+      container.innerHTML = "";
+      // build edges with combined labels for parallel edges to reduce clutter
+      const merged = new Map();
+      edges.forEach(e => {
+        const key = `${e.src}->${e.dst}`;
+        const lbl = (kind === "dpda")
+          ? `${e.kind === "ACCEPTANCE" ? "" : "ε:"}${(e.symbols && e.symbols.length) ? e.symbols.join(",") : "ε"}`
+          : (e.label != null ? e.label : ((e.symbols && e.symbols.length) ? e.symbols.join(",") : ""));
+        if (merged.has(key)) {
+          const m = merged.get(key); m.labels.push(lbl);
+          if (kind === "dpda" && e.kind === "ACCEPTANCE") m.hasAcc = true;
+          if (kind === "dpda" && e.kind === "REDUCTION")  m.hasRed = true;
+          if (kind === "npda" && e.is_epsilon) m.hasEps = true;
+        } else {
+          merged.set(key, {
+            src: e.src, dst: e.dst, labels: [lbl],
+            hasAcc: kind === "dpda" && e.kind === "ACCEPTANCE",
+            hasRed: kind === "dpda" && e.kind === "REDUCTION",
+            hasEps: kind === "npda" && e.is_epsilon,
+            kind: e.kind || (e.is_epsilon ? "EPS" : "shift"),
+          });
+        }
+      });
+
+      const elems = [];
+      states.forEach(s => {
+        const cls = [];
+        if (s.is_start) cls.push("start");
+        if (s.is_accepting) cls.push("accepting");
+        elems.push({ data: { id: String(s.id), label: typeof s.id === "number" ? `s${s.id}` : String(s.id) }, classes: cls.join(" ") });
+      });
+      let i = 0;
+      for (const [, m] of merged) {
+        const cls = [];
+        if (m.hasRed) cls.push("dpda-red");
+        else if (m.hasAcc) cls.push("dpda-acc");
+        else if (m.hasEps) cls.push("npda-eps");
+        elems.push({
+          data: {
+            id: `e${i++}`, source: String(m.src), target: String(m.dst),
+            label: m.labels.slice(0, 3).join(" | ") + (m.labels.length > 3 ? " | …" : ""),
+          },
+          classes: cls.join(" ")
+        });
+      }
+
+      const cy = cytoscape({
+        container, elements: elems,
+        wheelSensitivity: 0.2,
+        layout: layoutFor(layoutMode),
+        style: [
+          { selector: "node", style: {
+            "background-color": "#1c2c4a",
+            "border-color": "#3a5582",
+            "border-width": 1.5,
+            "color": "#dde6f5",
+            "label": "data(label)",
+            "text-valign": "center", "text-halign": "center",
+            "font-size": 11, "font-family": "ui-monospace, Menlo, Consolas, monospace",
+            "width": 36, "height": 36,
+            "transition-property": "background-color, border-color, border-width, width, height",
+            "transition-duration": "0.18s",
+          }},
+          { selector: ".start", style: { "border-color": "#6aa9ff", "border-width": 2 }},
+          { selector: ".accepting", style: { "border-color": "#2ee6a1", "border-width": 3 }},
+          { selector: ".active", style: {
+            "background-color": "#3a5fa8",
+            "border-color": "#9bc1ff",
+            "border-width": 4,
+            "width": 48, "height": 48,
+          }},
+          { selector: ".frontier-active", style: {
+            "background-color": "#a8327d",
+            "border-color": "#f472b6",
+            "border-width": 3,
+          }},
+          { selector: "edge", style: {
+            "curve-style": "bezier",
+            "control-point-step-size": 28,
+            "line-color": "#3a5582",
+            "target-arrow-color": "#3a5582",
+            "target-arrow-shape": "triangle",
+            "label": "data(label)",
+            "font-size": 9.5, "color": "#92a3c0",
+            "text-background-color": "#0b1322",
+            "text-background-opacity": 0.85, "text-background-padding": 2,
+            "width": 1.4,
+            "transition-property": "line-color, target-arrow-color, width",
+            "transition-duration": "0.18s",
+          }},
+          { selector: ".dpda-acc", style: { "line-color": "#38bdf8", "target-arrow-color": "#38bdf8" }},
+          { selector: ".dpda-red", style: { "line-color": "#c084fc", "target-arrow-color": "#c084fc", "line-style": "dashed" }},
+          { selector: ".npda-eps", style: { "line-color": "#94a3b8", "target-arrow-color": "#94a3b8", "line-style": "dotted" }},
+          { selector: ".active-edge", style: { "line-color": "#fbbf24", "target-arrow-color": "#fbbf24", "width": 3 }},
+        ],
+      });
+      return cy;
+    }
+
+    function highlightSingle(cy, activeId, edgeFn) {
+      if (!cy) return;
+      cy.nodes().removeClass("active frontier-active");
+      cy.edges().removeClass("active-edge");
+      if (activeId == null) return;
+      const n = cy.getElementById(String(activeId));
+      if (n && n.length) n.addClass("active");
+      if (edgeFn) {
+        cy.edges().forEach(e => { if (edgeFn(e.data())) e.addClass("active-edge"); });
+      }
+    }
+
+    function highlightFrontier(cy, ids) {
+      if (!cy) return;
+      cy.nodes().removeClass("active frontier-active");
+      cy.edges().removeClass("active-edge");
+      const set = new Set(ids.map(String));
+      cy.nodes().forEach(n => { if (set.has(n.id())) n.addClass("frontier-active"); });
+    }
+
+    function relayoutAll() {
+      [cyNpda, cyLr, cyDp].forEach(c => { if (c) c.layout(layoutFor(layoutMode)).run(); });
+    }
+
+    /* ----------- LR pane ---------------------------------------------- */
+    function lrItemSet(stateId) {
+      const automaton = (trace.lr && trace.lr.automaton) || {};
+      const s = (automaton.states || []).find(x => x.id === stateId);
+      return s ? s.items : [];
+    }
+
+    function renderLR() {
+      const lr = trace.lr || {};
+      const steps = lrSteps();
+      if (!lr.available || !steps.length) {
+        el("lrBadge").style.display = "none";
+        el("lrState").textContent = "—";
+        el("lrStack").innerHTML = '<div class="stack-label">top↑</div><div class="empty">—</div>';
+        el("lrItems").innerHTML = '<div class="empty-msg">No LR(1) trace.</div>';
+        el("lrDetail").textContent = lr.error ? `LR(1) unavailable: ${lr.error}` : "—";
+        return;
+      }
+      const s = steps[lrI()];
+      const stateNow = s.state_after; // post-step state
+      el("lrState").textContent = `s${stateNow}`;
+
+      // badge
+      const b = el("lrBadge");
+      b.style.display = "inline-block";
+      if (s.action_kind === "SHIFT")       { b.className = "badge shift"; b.textContent = "Shift"; }
+      else if (s.action_kind === "REDUCE") { b.className = "badge redu";  b.textContent = "Reduce"; }
+      else if (s.action_kind === "ACCEPT") { b.className = "badge acc";   b.textContent = "Accept"; }
+      else                                 { b.className = "badge bad";   b.textContent = s.action_kind || "Error"; }
+
+      // stack (visual symbols + states)
+      const sb = el("lrStack");
+      const syms = s.stack_symbols_after || [];
+      const sts  = s.stack_after || [];
+      sb.innerHTML = '<div class="stack-label">top↑</div>';
+      const fragments = [];
+      for (let i = 0; i < sts.length; i++) {
+        const sym = i === 0 ? "·" : (syms[i - 1] || "?");
+        const stid = sts[i];
+        const isTop = i === sts.length - 1;
+        const div = document.createElement("div");
+        div.className = "item" + (isTop ? " top" : "");
+        div.textContent = `${sym} | s${stid}`;
+        fragments.push(div);
+      }
+      if (!fragments.length) {
+        const e = document.createElement("div"); e.className = "empty"; e.textContent = "(empty)";
+        sb.appendChild(e);
+      } else {
+        // top → bottom visual: append in order; CSS column-reverse renders top correctly
+        fragments.forEach(f => sb.appendChild(f));
+      }
+      const bot = document.createElement("div"); bot.className = "stack-bottom"; bot.textContent = "bottom"; sb.appendChild(bot);
+
+      // item set
+      renderItemSet(stateNow);
+
+      // detail
+      el("lrDetail").textContent = [
+        `step ${s.step}`,
+        `lookahead: ${s.lookahead}`,
+        `action: ${s.action_text}`,
+        `state: s${s.state_before} → s${s.state_after}`,
+        `valid actions in s${s.state_before}: ${(s.valid_actions || []).join(", ") || "—"}`,
+      ].join("\n");
+
+      // graph: highlight current state, and highlight edge taken (if shift)
+      const edgeFn = (d) => {
+        if (s.action_kind === "SHIFT") {
+          return d.source === String(s.state_before) && d.target === String(s.state_after) && (d.label || "").includes(s.lookahead);
+        }
+        return false;
+      };
+      highlightSingle(cyLr, stateNow, edgeFn);
+    }
+
+    function renderItemSet(stateId) {
+      const items = lrItemSet(stateId);
+      const root = el("lrItems"); root.innerHTML = "";
+      if (!items.length) { root.innerHTML = '<div class="empty-msg">no items</div>'; return; }
+      items.forEach(it => {
+        const d = document.createElement("div");
+        const cls = ["it"];
+        if (/·\s*,/.test(it)) cls.push("reduce"); // dot at end before lookahead
+        if (it.startsWith("[" + (trace.grammar?.start || "S") + "'") ) cls.push("start");
+        if (it.includes("$")) cls.push();
+        d.className = cls.join(" ");
+        d.textContent = it;
+        root.appendChild(d);
+      });
+    }
+
+    /* ----------- DPDA pane -------------------------------------------- */
+    function renderDPDA() {
+      const dp = trace.dpda || {};
+      const steps = dpSteps();
+      if (!dp.available || !steps.length) {
+        el("dpBadge").style.display = "none";
+        el("dpState").textContent = "—";
+        el("dpStack").innerHTML = '<div class="stack-label">top↑</div><div class="empty">—</div>';
+        el("dpMask").innerHTML = '<span class="muted">—</span>';
+        el("dpDetail").textContent = dp.error ? `DPDA unavailable: ${dp.error}` : "—";
+        return;
+      }
+      const s = steps[dpI()];
+      el("dpState").textContent = `s${s.state_after}`;
+
+      const b = el("dpBadge");
+      b.style.display = "inline-block";
+      if (s.edge_kind === "ACCEPTANCE") { b.className = "badge acc"; b.textContent = "Accept edge"; }
+      else                              { b.className = "badge dred"; b.textContent = "Reduce edge"; }
+
+      // stack
+      const sb = el("dpStack");
+      sb.innerHTML = '<div class="stack-label">top↑</div>';
+      const sts = s.stack_after || [];
+      if (!sts.length) {
+        const e = document.createElement("div"); e.className = "empty"; e.textContent = "(empty)";
+        sb.appendChild(e);
+      } else {
+        sts.forEach((st, i) => {
+          const isTop = i === sts.length - 1;
+          const div = document.createElement("div");
+          div.className = "item" + (isTop ? " top" : "");
+          div.textContent = `s${st}`;
+          sb.appendChild(div);
+        });
+      }
+      const bot = document.createElement("div"); bot.className = "stack-bottom"; bot.textContent = "bottom"; sb.appendChild(bot);
+
+      // mask
+      const allTerms = (trace.grammar && trace.grammar.terminals) || [];
+      const valid = new Set(s.valid_next_terminals || []);
+      const mask = el("dpMask"); mask.innerHTML = "";
+      if (!allTerms.length) {
+        mask.innerHTML = '<span class="muted">no terminals declared</span>';
+      } else {
+        allTerms.forEach(t => {
+          const c = document.createElement("span");
+          c.className = "chip " + (valid.has(t) ? "ok" : "bad");
+          c.innerHTML = (valid.has(t) ? "✓ " : "✗ ") + escapeHtml(t);
+          mask.appendChild(c);
+        });
+        // show "$" availability when meaningful (end of input)
+        if ((s.valid_next_terminals || []).includes("$")) {
+          const c = document.createElement("span");
+          c.className = "chip ok"; c.textContent = "✓ $";
+          mask.appendChild(c);
+        }
+      }
+
+      // detail
+      el("dpDetail").textContent = [
+        `step ${s.step}`,
+        `kind: ${s.edge_kind} (${s.consumes_input ? "consumes input" : "ε / peeks lookahead"})`,
+        `lookahead: ${s.lookahead}`,
+        `state: s${s.state_before} → s${s.state_after}`,
+        `accepted symbols: ${(s.accepted_symbols || []).join(", ") || "—"}`,
+        `stack match required: ${(s.stack_match || []).length ? "[" + s.stack_match.join(", ") + "]" : "any stack"}`,
+        `stack ops: ${(s.stack_ops || []).join(" ") || "—"}`,
+        `consumed: ${s.consumed_before} → ${s.consumed_after}`,
+        "",
+        s.edge_text || "",
+      ].join("\n");
+
+      const edgeFn = (d) => d.source === String(s.state_before) && d.target === String(s.state_after);
+      highlightSingle(cyDp, s.state_after, edgeFn);
+    }
+
+    /* ----------- NPDA pane -------------------------------------------- */
+    function renderNPDA() {
+      const np = trace.npda || {};
+      const steps = npSteps();
+      if (!np.available || !steps.length) {
+        el("npdaPhase").textContent = "phase: unavailable";
+        el("npdaFrontierCount").textContent = "—";
+        el("npdaTrunc").textContent = "";
+        el("npdaFrontier").innerHTML = '<div class="fc-empty">'
+          + (np.error ? "NPDA unavailable: " + escapeHtml(np.error) : "no NPDA trace") + '</div>';
+        el("npdaDetail").textContent = np.error || "—";
+        return;
+      }
+      const s = steps[npI()];
+      el("npdaPhase").innerHTML =
+        `<span class="badge ${s.phase === "consume" ? "shift" : "eps"}">phase: ${s.phase}</span>` +
+        `&nbsp;<span class="muted" style="font-size:11px;">lookahead ${escapeHtml(s.lookahead)}</span>`;
+      const cnt = s.frontier_size_after;
+      el("npdaFrontierCount").textContent = `${cnt} ${cnt === 1 ? "config" : "configs"} live`;
+      el("npdaTrunc").innerHTML = s.truncated ? '<span class="badge bad">truncated</span>' : "";
+
+      // frontier cards
+      const root = el("npdaFrontier"); root.innerHTML = "";
+      const beforeKey = (c) => c.state + "|" + JSON.stringify(c.stack) + "|" + JSON.stringify(c.remaining);
+      const beforeSet = new Set((s.frontier_before || []).map(beforeKey));
+      const after = s.frontier_after || [];
+      if (!after.length) {
+        root.innerHTML = '<div class="fc-empty">Frontier empty — NPDA has no live configurations</div>';
+      } else {
+        after.forEach(cfg => {
+          const card = document.createElement("div");
+          card.className = "fc";
+          if (!beforeSet.has(beforeKey(cfg))) card.classList.add("new");
+          const stateRow = document.createElement("div"); stateRow.className = "fc-state"; stateRow.textContent = "▸ " + cfg.state;
+          const stackRow = document.createElement("div"); stackRow.className = "fc-stack";
+          (cfg.stack || []).forEach(sym => {
+            const sp = document.createElement("span"); sp.className = "s"; sp.textContent = sym; stackRow.appendChild(sp);
+          });
+          const rem = document.createElement("div"); rem.className = "fc-rem";
+          rem.textContent = "remaining: " + ((cfg.remaining && cfg.remaining.length)
+              ? cfg.remaining.join(" ") : "(empty)");
+          card.appendChild(stateRow);
+          card.appendChild(stackRow);
+          card.appendChild(rem);
+          root.appendChild(card);
+        });
+      }
+
+      el("npdaDetail").textContent = [
+        `step ${s.step}`,
+        `phase: ${s.phase}`,
+        `lookahead: ${s.lookahead}`,
+        `frontier: ${s.frontier_size_before} → ${s.frontier_size_after}` + (s.truncated ? "  (capped — true frontier may be larger)" : ""),
+        s.summary || "",
+      ].filter(Boolean).join("\n");
+
+      // graph: highlight all states present in frontier
+      const ids = Array.from(new Set(after.map(c => c.state)));
+      highlightFrontier(cyNpda, ids);
+    }
+
+    /* ----------- bottom (productions / mask) -------------------------- */
+    function renderProductions() {
+      const lis = el("productions").querySelectorAll("li");
+      const lr = trace.lr; const steps = lr ? lrSteps() : [];
+      const s = steps[lrI()];
+      const reduceIdx = s && s.action_kind === "REDUCE" ? s.production_index : null;
+      lis.forEach(li => {
+        li.classList.remove("active");
+        if (reduceIdx != null && Number(li.dataset.idx) === reduceIdx) {
+          li.classList.add("active");
+        }
+      });
+    }
+
+    /* ----------- step controller -------------------------------------- */
+    function setStep(v) {
+      const m = maxIdx();
+      stepIdx = clamp(v, 0, m);
+      el("step").max = String(m);
+      el("step").value = String(stepIdx);
+      el("stepLabel").textContent = `${stepIdx + 1} / ${m + 1}`;
+
+      const np = npSteps().length, l = lrSteps().length, d = dpSteps().length;
+      const npFrac = np ? Math.min(stepIdx + 1, np) / np : 0;
+      const lFrac  = l  ? Math.min(stepIdx + 1, l)  / l  : 0;
+      const dFrac  = d  ? Math.min(stepIdx + 1, d)  / d  : 0;
+      el("pNpda").style.width = (npFrac * 100).toFixed(2) + "%";
+      el("pLr").style.width   = (lFrac  * 100).toFixed(2) + "%";
+      el("pDp").style.width   = (dFrac  * 100).toFixed(2) + "%";
+      el("lNpda").textContent = `${np ? Math.min(stepIdx + 1, np) : 0}/${np}`;
+      el("lLr").textContent   = `${l  ? Math.min(stepIdx + 1, l)  : 0}/${l}`;
+      el("lDp").textContent   = `${d  ? Math.min(stepIdx + 1, d)  : 0}/${d}`;
+
+      renderTape();
+      renderNPDA();
+      renderLR();
+      renderDPDA();
+      renderProductions();
+    }
+
+    /* ----------- top-level loaders ----------------------------------- */
+    function loadPayload(payload) {
+      bundle = (payload && payload.kind === "trace_bundle" && Array.isArray(payload.traces))
+        ? payload.traces : [payload];
+      const sel = el("bundlePick");
+      sel.innerHTML = "";
+      bundle.forEach((t, i) => {
+        const o = document.createElement("option");
+        o.value = String(i);
+        const verdict = t.dpda && t.dpda.accepted ? "ACCEPT" : "REJECT";
+        const tag = (t.source && t.source.label) || t.example || `trace ${i + 1}`;
+        o.textContent = `[${i + 1}] ${tag} · ${verdict}`;
+        sel.appendChild(o);
+      });
+      sel.style.display = bundle.length > 1 ? "inline-block" : "none";
+      loadTrace(bundle[0]);
+    }
+
+    function loadTrace(t) {
+      // accept v1 traces transparently (no npda block, fewer fields)
+      if (!t) return;
+      if (!t.npda) t.npda = { available: false, error: "v1 trace: NPDA not present", steps: [] };
+      if (!t.lr || !t.lr.steps) t.lr = Object.assign({ available: false, steps: [] }, t.lr || {});
+      if (!t.dpda || !t.dpda.steps) t.dpda = Object.assign({ available: false, steps: [] }, t.dpda || {});
+      if (!t.lr.automaton) t.lr.automaton = { states: [], edges: [] };
+      if (!t.dpda.automaton) t.dpda.automaton = { states: [], edges: [] };
+      if (!t.npda.automaton) t.npda.automaton = { states: [], edges: [] };
+
+      trace = t;
+      stepIdx = 0; stop();
+      el("step").value = "0";
+
+      renderHeader();
+      renderMachineSummaries();
+      cyNpda = destroyGraph(cyNpda);
+      cyLr   = destroyGraph(cyLr);
+      cyDp   = destroyGraph(cyDp);
+      cyNpda = makeGraph(el("npdaGraph"), trace.npda.automaton, "npda");
+      cyLr   = makeGraph(el("lrGraph"),   trace.lr.automaton,   "lr");
+      cyDp   = makeGraph(el("dpGraph"),   trace.dpda.automaton, "dpda");
+      setStep(0);
+    }
+
+    /* ----------- play / pause ----------------------------------------- */
+    function play() {
+      stop();
+      const ms = Number(el("speed").value) || 650;
+      const mm = maxIdx();
+      timer = setInterval(() => {
+        if (stepIdx >= mm) { stop(); el("play").textContent = "Play"; return; }
+        setStep(stepIdx + 1);
+      }, ms);
+      el("play").textContent = "Pause";
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+      el("play").textContent = "Play";
+    }
+
+    /* ----------- events ----------------------------------------------- */
+    el("file").addEventListener("change", async (e) => {
+      const f = e.target.files?.[0]; if (!f) return;
+      try { loadPayload(JSON.parse(await f.text())); }
+      catch (err) { alert("Bad JSON: " + err.message); }
+    });
+    el("sample").addEventListener("change", async (e) => {
+      const url = e.target.value; if (!url) return;
+      try {
+        const r = await fetch(url);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        loadPayload(await r.json());
+      } catch (err) {
+        alert("Could not load sample: " + err.message + "\nTip: open this page over a server (python -m pre3.tools.viewer).");
+      }
+    });
+    el("bundlePick").addEventListener("change", (e) => {
+      const i = Number(e.target.value);
+      if (bundle[i]) loadTrace(bundle[i]);
+    });
+    el("reset").addEventListener("click", () => { if (trace) loadTrace(trace); });
+    el("step").addEventListener("input", (e) => { setStep(Number(e.target.value)); });
+    el("prev").addEventListener("click", () => { setStep(stepIdx - 1); });
+    el("next").addEventListener("click", () => { setStep(stepIdx + 1); });
+    el("play").addEventListener("click", () => { timer ? stop() : play(); });
+
+    function setLayout(mode) {
+      layoutMode = mode;
+      ["layoutCircle", "layoutBreadth", "layoutCose"].forEach(id => el(id).classList.remove("on"));
+      el(mode === "circle" ? "layoutCircle" : mode === "breadth" ? "layoutBreadth" : "layoutCose").classList.add("on");
+      relayoutAll();
+    }
+    el("layoutCircle").addEventListener("click", () => setLayout("circle"));
+    el("layoutBreadth").addEventListener("click", () => setLayout("breadth"));
+    el("layoutCose").addEventListener("click", () => setLayout("cose"));
+
+    window.addEventListener("keydown", (e) => {
+      if (!trace) return;
+      if (e.target && e.target.tagName === "INPUT" && e.target.type === "file") return;
+      if (e.key === "ArrowLeft")  { setStep(stepIdx - 1); e.preventDefault(); }
+      if (e.key === "ArrowRight") { setStep(stepIdx + 1); e.preventDefault(); }
+      if (e.key === " " || e.code === "Space") { timer ? stop() : play(); e.preventDefault(); }
+      if (e.key === "r" || e.key === "R") { if (trace) loadTrace(trace); }
+    });
+    window.addEventListener("dragover", (e) => e.preventDefault());
+    window.addEventListener("drop", async (e) => {
+      e.preventDefault();
+      const f = e.dataTransfer?.files?.[0]; if (!f) return;
+      try { loadPayload(JSON.parse(await f.text())); }
+      catch (err) { alert("Bad JSON: " + err.message); }
+    });
+
+    /* ----------- boot ------------------------------------------------- */
+    fillSampleSelect();
+
+    // Try auto-loading a bundled welcome sample (works only when served over HTTP)
+    (async () => {
+      try {
+        const r = await fetch("samples/parens.json");
+        if (r.ok) loadPayload(await r.json());
+      } catch (_) { /* fine */ }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+{
+  "format_version": 1,
+  "kind": "trace_bundle",
+  "traces": [
+    {
+      "format_version": 1,
+      "example": "balanced_parens",
+      "raw_input": "( ( ) )",
+      "tokens": [
+        "(",
+        "(",
+        ")",
+        ")"
+      ],
+      "source": {
+        "kind": "llm",
+        "backend": "mock",
+        "grammar": "parens",
+        "model": "mock-llm-source",
+        "challenge": false,
+        "prompt_index": 1,
+        "prompt": "Emit a valid balanced-parenthesis sequence of four symbols."
+      },
+      "grammar": {
+        "start": "S",
+        "terminals": [
+          "(",
+          ")"
+        ],
+        "non_terminals": [
+          "S"
+        ],
+        "productions": [
+          "S \u2192 ( S )",
+          "S \u2192 \u03b5"
+        ]
+      },
+      "lr": {
+        "accepted": true,
+        "reason": "Accepted",
+        "state_count": 8,
+        "steps": [
+          {
+            "step": 0,
+            "state_before": 0,
+            "stack_before": [
+              0
+            ],
+            "lookahead": "(",
+            "action_kind": "SHIFT",
+            "action_text": "shift '(' -> s1",
+            "state_after": 1,
+            "stack_after": [
+              0,
+              1
+            ],
+            "input_pos_before": 0,
+            "input_pos_after": 1
+          },
+          {
+            "step": 1,
+            "state_before": 1,
+            "stack_before": [
+              0,
+              1
+            ],
+            "lookahead": "(",
+            "action_kind": "SHIFT",
+            "action_text": "shift '(' -> s3",
+            "state_after": 3,
+            "stack_after": [
+              0,
+              1,
+              3
+            ],
+            "input_pos_before": 1,
+            "input_pos_after": 2
+          },
+          {
+            "step": 2,
+            "state_before": 3,
+            "stack_before": [
+              0,
+              1,
+              3
+            ],
+            "lookahead": ")",
+            "action_kind": "REDUCE",
+            "action_text": "reduce S \u2192 \u03b5",
+            "state_after": 6,
+            "stack_after": [
+              0,
+              1,
+              3,
+              6
+            ],
+            "input_pos_before": 2,
+            "input_pos_after": 2
+          },
+          {
+            "step": 3,
+            "state_before": 6,
+            "stack_before": [
+              0,
+              1,
+              3,
+              6
+            ],
+            "lookahead": ")",
+            "action_kind": "SHIFT",
+            "action_text": "shift ')' -> s7",
+            "state_after": 7,
+            "stack_after": [
+              0,
+              1,
+              3,
+              6,
+              7
+            ],
+            "input_pos_before": 2,
+            "input_pos_after": 3
+          },
+          {
+            "step": 4,
+            "state_before": 7,
+            "stack_before": [
+              0,
+              1,
+              3,
+              6,
+              7
+            ],
+            "lookahead": ")",
+            "action_kind": "REDUCE",
+            "action_text": "reduce S \u2192 ( S )",
+            "state_after": 4,
+            "stack_after": [
+              0,
+              1,
+              4
+            ],
+            "input_pos_before": 3,
+            "input_pos_after": 3
+          },
+          {
+            "step": 5,
+            "state_before": 4,
+            "stack_before": [
+              0,
+              1,
+              4
+            ],
+            "lookahead": ")",
+            "action_kind": "SHIFT",
+            "action_text": "shift ')' -> s5",
+            "state_after": 5,
+            "stack_after": [
+              0,
+              1,
+              4,
+              5
+            ],
+            "input_pos_before": 3,
+            "input_pos_after": 4
+          },
+          {
+            "step": 6,
+            "state_before": 5,
+            "stack_before": [
+              0,
+              1,
+              4,
+              5
+            ],
+            "lookahead": "$",
+            "action_kind": "REDUCE",
+            "action_text": "reduce S \u2192 ( S )",
+            "state_after": 2,
+            "stack_after": [
+              0,
+              2
+            ],
+            "input_pos_before": 4,
+            "input_pos_after": 4
+          },
+          {
+            "step": 7,
+            "state_before": 2,
+            "stack_before": [
+              0,
+              2
+            ],
+            "lookahead": "$",
+            "action_kind": "ACCEPT",
+            "action_text": "accept",
+            "state_after": 2,
+            "stack_after": [
+              0,
+              2
+            ],
+            "input_pos_before": 4,
+            "input_pos_after": 4
+          }
+        ]
+      },
+      "dpda": {
+        "accepted": true,
+        "reason": "Accepted",
+        "state_count": 8,
+        "edge_count": 11,
+        "accepting_states": [
+          2
+        ],
+        "steps": [
+          {
+            "step": 0,
+            "state_before": 0,
+            "stack_before": [
+              0
+            ],
+            "lookahead": "(",
+            "edge_kind": "ACCEPTANCE",
+            "edge_text": "ACC on={(} match=[*] ops=[push(1)] -> s1",
+            "state_after": 1,
+            "stack_after": [
+              0,
+              1
+            ],
+            "consumed_before": 0,
+            "consumed_after": 1,
+            "accepted_symbols": [
+              "("
+            ],
+            "stack_match": [],
+            "stack_ops": [
+              "push(1)"
+            ],
+            "consumes_input": true
+          },
+          {
+            "step": 1,
+            "state_before": 1,
+            "stack_before": [
+              0,
+              1
+            ],
+            "lookahead": "(",
+            "edge_kind": "ACCEPTANCE",
+            "edge_text": "ACC on={(} match=[*] ops=[push(3)] -> s3",
+            "state_after": 3,
+            "stack_after": [
+              0,
+              1,
+              3
+            ],
+            "consumed_before": 1,
+            "consumed_after": 2,
+            "accepted_symbols": [
+              "("
+            ],
+            "stack_match": [],
+            "stack_ops": [
+              "push(3)"
+            ],
+            "consumes_input": true
+          },
+          {
+            "step": 2,
+            "state_before": 3,
+            "stack_before": [
+              0,
+              1,
+              3
+            ],
+            "lookahead": ")",
+            "edge_kind": "REDUCTION",
+            "edge_text": "RED on={)} match=[3] ops=[push(6)] -> s6",
+            "state_after": 6,
+            "stack_after": [
+              0,
+              1,
+              3,
+              6
+            ],
+            "consumed_before": 2,
+            "consumed_after": 2,
+            "accepted_symbols": [
+              ")"
+            ],
+            "stack_match": [
+              3
+            ],
+            "stack_ops": [
+              "push(6)"
+            ],
+            "consumes_input": false
+          },
+          {
+            "step": 3,
+            "state_before": 6,
+            "stack_before": [
+              0,
+              1,
+              3,
+              6
+            ],
+            "lookahead": ")",
+            "edge_kind": "ACCEPTANCE",
+            "edge_text": "ACC on={)} match=[*] ops=[push(7)] -> s7",
+            "state_after": 7,
+            "stack_after": [
+              0,
+              1,
+              3,
+              6,
+              7
+            ],
+            "consumed_before": 2,
+            "consumed_after": 3,
+            "accepted_symbols": [
+              ")"
+            ],
+            "stack_match": [],
+            "stack_ops": [
+              "push(7)"
+            ],
+            "consumes_input": true
+          },
+          {
+            "step": 4,
+            "state_before": 7,
+            "stack_before": [
+              0,
+              1,
+              3,
+              6,
+              7
+            ],
+            "lookahead": ")",
+            "edge_kind": "REDUCTION",
+            "edge_text": "RED on={)} match=[1,3,6,7] ops=[pop(3) push(4)] -> s4",
+            "state_after": 4,
+            "stack_after": [
+              0,
+              1,
+              4
+            ],
+            "consumed_before": 3,
+            "consumed_after": 3,
+            "accepted_symbols": [
+              ")"
+            ],
+            "stack_match": [
+              1,
+              3,
+              6,
+              7
+            ],
+            "stack_ops": [
+              "pop(3)",
+              "push(4)"
+            ],
+            "consumes_input": false
+          },
+          {
+            "step": 5,
+            "state_before": 4,
+            "stack_before": [
+              0,
+              1,
+              4
+            ],
+            "lookahead": ")",
+            "edge_kind": "ACCEPTANCE",
+            "edge_text": "ACC on={)} match=[*] ops=[push(5)] -> s5",
+            "state_after": 5,
+            "stack_after": [
+              0,
+              1,
+              4,
+              5
+            ],
+            "consumed_before": 3,
+            "consumed_after": 4,
+            "accepted_symbols": [
+              ")"
+            ],
+            "stack_match": [],
+            "stack_ops": [
+              "push(5)"
+            ],
+            "consumes_input": true
+          },
+          {
+            "step": 6,
+            "state_before": 5,
+            "stack_before": [
+              0,
+              1,
+              4,
+              5
+            ],
+            "lookahead": "$",
+            "edge_kind": "REDUCTION",
+            "edge_text": "RED on={$} match=[0,1,4,5] ops=[pop(3) push(2)] -> s2",
+            "state_after": 2,
+            "stack_after": [
+              0,
+              2
+            ],
+            "consumed_before": 4,
+            "consumed_after": 4,
+            "accepted_symbols": [
+              "$"
+            ],
+            "stack_match": [
+              0,
+              1,
+              4,
+              5
+            ],
+            "stack_ops": [
+              "pop(3)",
+              "push(2)"
+            ],
+            "consumes_input": false
+          }
+        ]
+      }
+    },
+    {
+      "format_version": 1,
+      "example": "balanced_parens",
+      "raw_input": ") ( )",
+      "tokens": [
+        ")",
+        "(",
+        ")"
+      ],
+      "source": {
+        "kind": "llm",
+        "backend": "mock",
+        "grammar": "parens",
+        "model": "mock-llm-source",
+        "challenge": false,
+        "prompt_index": 2,
+        "prompt": "Emit an invalid parenthesis stream with an extra close."
+      },
+      "grammar": {
+        "start": "S",
+        "terminals": [
+          "(",
+          ")"
+        ],
+        "non_terminals": [
+          "S"
+        ],
+        "productions": [
+          "S \u2192 ( S )",
+          "S \u2192 \u03b5"
+        ]
+      },
+      "lr": {
+        "accepted": false,
+        "reason": "No action for state=0, symbol=')'",
+        "state_count": 8,
+        "steps": []
+      },
+      "dpda": {
+        "accepted": false,
+        "reason": "No edge at state=0, symbol=')'",
+        "state_count": 8,
+        "edge_count": 11,
+        "accepting_states": [
+          2
+        ],
+        "steps": []
+      }
+    }
+  ]
+}

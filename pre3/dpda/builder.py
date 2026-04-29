@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from typing import Dict, FrozenSet, List, Optional, Set, Tuple
 
 from ..grammar.cfg import END_MARKER, Production
-from ..grammar.lr1 import LR1Automaton, LR1Item
+from ..grammar.lr1 import ActionType, LR1Automaton, LR1Item
 from .edge import EdgeKind, PrefixConditionedEdge, StackOp, StackOpType
 
 
@@ -208,6 +208,13 @@ class DPDABuilder:
         We enumerate backward paths of length pop_count through the
         shift-transition graph to find valid stack prefixes.
         """
+        # Must agree with LR(1) ACTION: if the table says SHIFT on
+        # (origin, lookahead), the parser never reduces on that symbol
+        # (e.g. dangling-else: prefer shifting 'else').
+        act = self.lr1.action_table.get((origin, lookahead))
+        if act is not None and act.kind == ActionType.SHIFT:
+            return
+
         backward_paths = self._enumerate_backward_paths(origin, pop_count)
 
         for path in backward_paths:

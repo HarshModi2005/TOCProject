@@ -1,0 +1,6870 @@
+{
+  "format_version": 1,
+  "example": "arithmetic",
+  "raw_input": "(((id+id)*((id+id)*(id+id)))+((id*id)+((id*id)*id)))",
+  "tokens": [
+    "(",
+    "(",
+    "(",
+    "id",
+    "+",
+    "id",
+    ")",
+    "*",
+    "(",
+    "(",
+    "id",
+    "+",
+    "id",
+    ")",
+    "*",
+    "(",
+    "id",
+    "+",
+    "id",
+    ")",
+    ")",
+    ")",
+    "+",
+    "(",
+    "(",
+    "id",
+    "*",
+    "id",
+    ")",
+    "+",
+    "(",
+    "(",
+    "id",
+    "*",
+    "id",
+    ")",
+    "*",
+    "id",
+    ")",
+    ")",
+    ")"
+  ],
+  "source": {
+    "kind": "manual",
+    "input_mode": "raw",
+    "label": null
+  },
+  "grammar": {
+    "start": "E",
+    "terminals": [
+      "(",
+      ")",
+      "*",
+      "+",
+      "id"
+    ],
+    "non_terminals": [
+      "E",
+      "F",
+      "T"
+    ],
+    "productions": [
+      "E \u2192 E + T",
+      "E \u2192 T",
+      "T \u2192 T * F",
+      "T \u2192 F",
+      "F \u2192 ( E )",
+      "F \u2192 id"
+    ]
+  },
+  "lr": {
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 22,
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s3",
+        "state_after": 3,
+        "stack_after": [
+          0,
+          3
+        ],
+        "input_pos_before": 0,
+        "input_pos_after": 1
+      },
+      {
+        "step": 1,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          3
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10
+        ],
+        "input_pos_before": 1,
+        "input_pos_after": 2
+      },
+      {
+        "step": 2,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10
+        ],
+        "input_pos_before": 2,
+        "input_pos_after": 3
+      },
+      {
+        "step": 3,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          11
+        ],
+        "input_pos_before": 3,
+        "input_pos_after": 4
+      },
+      {
+        "step": 4,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          9
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 4
+      },
+      {
+        "step": 5,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 4
+      },
+      {
+        "step": 6,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 4
+      },
+      {
+        "step": 7,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "action_kind": "SHIFT",
+        "action_text": "shift '+' -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16
+        ],
+        "input_pos_before": 4,
+        "input_pos_after": 5
+      },
+      {
+        "step": 8,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "input_pos_before": 5,
+        "input_pos_after": 6
+      },
+      {
+        "step": 9,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 6
+      },
+      {
+        "step": 10,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 6
+      },
+      {
+        "step": 11,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 E + T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 6
+      },
+      {
+        "step": 12,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 6,
+        "input_pos_after": 7
+      },
+      {
+        "step": 13,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          9
+        ],
+        "input_pos_before": 7,
+        "input_pos_after": 7
+      },
+      {
+        "step": 14,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "input_pos_before": 7,
+        "input_pos_after": 7
+      },
+      {
+        "step": 15,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "action_kind": "SHIFT",
+        "action_text": "shift '*' -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13
+        ],
+        "input_pos_before": 7,
+        "input_pos_after": 8
+      },
+      {
+        "step": 16,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10
+        ],
+        "input_pos_before": 8,
+        "input_pos_after": 9
+      },
+      {
+        "step": 17,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10
+        ],
+        "input_pos_before": 9,
+        "input_pos_after": 10
+      },
+      {
+        "step": 18,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          11
+        ],
+        "input_pos_before": 10,
+        "input_pos_after": 11
+      },
+      {
+        "step": 19,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          9
+        ],
+        "input_pos_before": 11,
+        "input_pos_after": 11
+      },
+      {
+        "step": 20,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 11,
+        "input_pos_after": 11
+      },
+      {
+        "step": 21,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 11,
+        "input_pos_after": 11
+      },
+      {
+        "step": 22,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "action_kind": "SHIFT",
+        "action_text": "shift '+' -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16
+        ],
+        "input_pos_before": 11,
+        "input_pos_after": 12
+      },
+      {
+        "step": 23,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "input_pos_before": 12,
+        "input_pos_after": 13
+      },
+      {
+        "step": 24,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "input_pos_before": 13,
+        "input_pos_after": 13
+      },
+      {
+        "step": 25,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "input_pos_before": 13,
+        "input_pos_after": 13
+      },
+      {
+        "step": 26,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 E + T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 13,
+        "input_pos_after": 13
+      },
+      {
+        "step": 27,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 13,
+        "input_pos_after": 14
+      },
+      {
+        "step": 28,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "input_pos_before": 14,
+        "input_pos_after": 14
+      },
+      {
+        "step": 29,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "input_pos_before": 14,
+        "input_pos_after": 14
+      },
+      {
+        "step": 30,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "action_kind": "SHIFT",
+        "action_text": "shift '*' -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13
+        ],
+        "input_pos_before": 14,
+        "input_pos_after": 15
+      },
+      {
+        "step": 31,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10
+        ],
+        "input_pos_before": 15,
+        "input_pos_after": 16
+      },
+      {
+        "step": 32,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          11
+        ],
+        "input_pos_before": 16,
+        "input_pos_after": 17
+      },
+      {
+        "step": 33,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "input_pos_before": 17,
+        "input_pos_after": 17
+      },
+      {
+        "step": 34,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "input_pos_before": 17,
+        "input_pos_after": 17
+      },
+      {
+        "step": 35,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "input_pos_before": 17,
+        "input_pos_after": 17
+      },
+      {
+        "step": 36,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "action_kind": "SHIFT",
+        "action_text": "shift '+' -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16
+        ],
+        "input_pos_before": 17,
+        "input_pos_after": 18
+      },
+      {
+        "step": 37,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          11
+        ],
+        "input_pos_before": 18,
+        "input_pos_after": 19
+      },
+      {
+        "step": 38,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          9
+        ],
+        "input_pos_before": 19,
+        "input_pos_after": 19
+      },
+      {
+        "step": 39,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          18
+        ],
+        "input_pos_before": 19,
+        "input_pos_after": 19
+      },
+      {
+        "step": 40,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 E + T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "input_pos_before": 19,
+        "input_pos_after": 19
+      },
+      {
+        "step": 41,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 19,
+        "input_pos_after": 20
+      },
+      {
+        "step": 42,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          14
+        ],
+        "input_pos_before": 20,
+        "input_pos_after": 20
+      },
+      {
+        "step": 43,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 T * F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "input_pos_before": 20,
+        "input_pos_after": 20
+      },
+      {
+        "step": 44,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "input_pos_before": 20,
+        "input_pos_after": 20
+      },
+      {
+        "step": 45,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 20,
+        "input_pos_after": 21
+      },
+      {
+        "step": 46,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          14
+        ],
+        "input_pos_before": 21,
+        "input_pos_after": 21
+      },
+      {
+        "step": 47,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 T * F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "input_pos_before": 21,
+        "input_pos_after": 21
+      },
+      {
+        "step": 48,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          15
+        ],
+        "input_pos_before": 21,
+        "input_pos_after": 21
+      },
+      {
+        "step": 49,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 21,
+        "input_pos_after": 22
+      },
+      {
+        "step": 50,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          9
+        ],
+        "input_pos_before": 22,
+        "input_pos_after": 22
+      },
+      {
+        "step": 51,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          9
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          12
+        ],
+        "input_pos_before": 22,
+        "input_pos_after": 22
+      },
+      {
+        "step": 52,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          12
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 8,
+        "stack_after": [
+          0,
+          3,
+          8
+        ],
+        "input_pos_before": 22,
+        "input_pos_after": 22
+      },
+      {
+        "step": 53,
+        "state_before": 8,
+        "stack_before": [
+          0,
+          3,
+          8
+        ],
+        "lookahead": "+",
+        "action_kind": "SHIFT",
+        "action_text": "shift '+' -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16
+        ],
+        "input_pos_before": 22,
+        "input_pos_after": 23
+      },
+      {
+        "step": 54,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10
+        ],
+        "input_pos_before": 23,
+        "input_pos_after": 24
+      },
+      {
+        "step": 55,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10
+        ],
+        "input_pos_before": 24,
+        "input_pos_after": 25
+      },
+      {
+        "step": 56,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          11
+        ],
+        "input_pos_before": 25,
+        "input_pos_after": 26
+      },
+      {
+        "step": 57,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          9
+        ],
+        "input_pos_before": 26,
+        "input_pos_after": 26
+      },
+      {
+        "step": 58,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 26,
+        "input_pos_after": 26
+      },
+      {
+        "step": 59,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "action_kind": "SHIFT",
+        "action_text": "shift '*' -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "input_pos_before": 26,
+        "input_pos_after": 27
+      },
+      {
+        "step": 60,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "input_pos_before": 27,
+        "input_pos_after": 28
+      },
+      {
+        "step": 61,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "input_pos_before": 28,
+        "input_pos_after": 28
+      },
+      {
+        "step": 62,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 T * F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 28,
+        "input_pos_after": 28
+      },
+      {
+        "step": 63,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 28,
+        "input_pos_after": 28
+      },
+      {
+        "step": 64,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 28,
+        "input_pos_after": 29
+      },
+      {
+        "step": 65,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          9
+        ],
+        "input_pos_before": 29,
+        "input_pos_after": 29
+      },
+      {
+        "step": 66,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          12
+        ],
+        "input_pos_before": 29,
+        "input_pos_after": 29
+      },
+      {
+        "step": 67,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "input_pos_before": 29,
+        "input_pos_after": 29
+      },
+      {
+        "step": 68,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "action_kind": "SHIFT",
+        "action_text": "shift '+' -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16
+        ],
+        "input_pos_before": 29,
+        "input_pos_after": 30
+      },
+      {
+        "step": 69,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10
+        ],
+        "input_pos_before": 30,
+        "input_pos_after": 31
+      },
+      {
+        "step": 70,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10
+        ],
+        "lookahead": "(",
+        "action_kind": "SHIFT",
+        "action_text": "shift '(' -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10
+        ],
+        "input_pos_before": 31,
+        "input_pos_after": 32
+      },
+      {
+        "step": 71,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          11
+        ],
+        "input_pos_before": 32,
+        "input_pos_after": 33
+      },
+      {
+        "step": 72,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          9
+        ],
+        "input_pos_before": 33,
+        "input_pos_after": 33
+      },
+      {
+        "step": 73,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 33,
+        "input_pos_after": 33
+      },
+      {
+        "step": 74,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "action_kind": "SHIFT",
+        "action_text": "shift '*' -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "input_pos_before": 33,
+        "input_pos_after": 34
+      },
+      {
+        "step": 75,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "input_pos_before": 34,
+        "input_pos_after": 35
+      },
+      {
+        "step": 76,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "input_pos_before": 35,
+        "input_pos_after": 35
+      },
+      {
+        "step": 77,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 T * F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "input_pos_before": 35,
+        "input_pos_after": 35
+      },
+      {
+        "step": 78,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15
+        ],
+        "input_pos_before": 35,
+        "input_pos_after": 35
+      },
+      {
+        "step": 79,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 35,
+        "input_pos_after": 36
+      },
+      {
+        "step": 80,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          9
+        ],
+        "input_pos_before": 36,
+        "input_pos_after": 36
+      },
+      {
+        "step": 81,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "input_pos_before": 36,
+        "input_pos_after": 36
+      },
+      {
+        "step": 82,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "action_kind": "SHIFT",
+        "action_text": "shift '*' -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13
+        ],
+        "input_pos_before": 36,
+        "input_pos_after": 37
+      },
+      {
+        "step": 83,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "action_kind": "SHIFT",
+        "action_text": "shift 'id' -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          11
+        ],
+        "input_pos_before": 37,
+        "input_pos_after": 38
+      },
+      {
+        "step": 84,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 id",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          14
+        ],
+        "input_pos_before": 38,
+        "input_pos_after": 38
+      },
+      {
+        "step": 85,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 T * F",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "input_pos_before": 38,
+        "input_pos_after": 38
+      },
+      {
+        "step": 86,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15
+        ],
+        "input_pos_before": 38,
+        "input_pos_after": 38
+      },
+      {
+        "step": 87,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 38,
+        "input_pos_after": 39
+      },
+      {
+        "step": 88,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          9
+        ],
+        "input_pos_before": 39,
+        "input_pos_after": 39
+      },
+      {
+        "step": 89,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          18
+        ],
+        "input_pos_before": 39,
+        "input_pos_after": 39
+      },
+      {
+        "step": 90,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 E + T",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "input_pos_before": 39,
+        "input_pos_after": 39
+      },
+      {
+        "step": 91,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          17
+        ],
+        "input_pos_before": 39,
+        "input_pos_after": 40
+      },
+      {
+        "step": 92,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          9
+        ],
+        "input_pos_before": 40,
+        "input_pos_after": 40
+      },
+      {
+        "step": 93,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          18
+        ],
+        "input_pos_before": 40,
+        "input_pos_after": 40
+      },
+      {
+        "step": 94,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 E + T",
+        "state_after": 8,
+        "stack_after": [
+          0,
+          3,
+          8
+        ],
+        "input_pos_before": 40,
+        "input_pos_after": 40
+      },
+      {
+        "step": 95,
+        "state_before": 8,
+        "stack_before": [
+          0,
+          3,
+          8
+        ],
+        "lookahead": ")",
+        "action_kind": "SHIFT",
+        "action_text": "shift ')' -> s19",
+        "state_after": 19,
+        "stack_after": [
+          0,
+          3,
+          8,
+          19
+        ],
+        "input_pos_before": 40,
+        "input_pos_after": 41
+      },
+      {
+        "step": 96,
+        "state_before": 19,
+        "stack_before": [
+          0,
+          3,
+          8,
+          19
+        ],
+        "lookahead": "$",
+        "action_kind": "REDUCE",
+        "action_text": "reduce F \u2192 ( E )",
+        "state_after": 2,
+        "stack_after": [
+          0,
+          2
+        ],
+        "input_pos_before": 41,
+        "input_pos_after": 41
+      },
+      {
+        "step": 97,
+        "state_before": 2,
+        "stack_before": [
+          0,
+          2
+        ],
+        "lookahead": "$",
+        "action_kind": "REDUCE",
+        "action_text": "reduce T \u2192 F",
+        "state_after": 5,
+        "stack_after": [
+          0,
+          5
+        ],
+        "input_pos_before": 41,
+        "input_pos_after": 41
+      },
+      {
+        "step": 98,
+        "state_before": 5,
+        "stack_before": [
+          0,
+          5
+        ],
+        "lookahead": "$",
+        "action_kind": "REDUCE",
+        "action_text": "reduce E \u2192 T",
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "input_pos_before": 41,
+        "input_pos_after": 41
+      },
+      {
+        "step": 99,
+        "state_before": 1,
+        "stack_before": [
+          0,
+          1
+        ],
+        "lookahead": "$",
+        "action_kind": "ACCEPT",
+        "action_text": "accept",
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "input_pos_before": 41,
+        "input_pos_after": 41
+      }
+    ]
+  },
+  "dpda": {
+    "accepted": true,
+    "reason": "Accepted",
+    "state_count": 22,
+    "edge_count": 107,
+    "accepting_states": [
+      1
+    ],
+    "steps": [
+      {
+        "step": 0,
+        "state_before": 0,
+        "stack_before": [
+          0
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(3)] -> s3",
+        "state_after": 3,
+        "stack_after": [
+          0,
+          3
+        ],
+        "consumed_before": 0,
+        "consumed_after": 1,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(3)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 1,
+        "state_before": 3,
+        "stack_before": [
+          0,
+          3
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10
+        ],
+        "consumed_before": 1,
+        "consumed_after": 2,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 2,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10
+        ],
+        "consumed_before": 2,
+        "consumed_after": 3,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 3,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          11
+        ],
+        "consumed_before": 3,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 4,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          9
+        ],
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 5,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 6,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 4,
+        "consumed_after": 4,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 7,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={+} match=[*] ops=[push(16)] -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16
+        ],
+        "consumed_before": 4,
+        "consumed_after": 5,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(16)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 8,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "consumed_before": 5,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 9,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "consumed_before": 6,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 10,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,9] ops=[pop(1) push(18)] -> s18",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "consumed_before": 6,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(18)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 11,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,15,16,18] ops=[pop(3) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 6,
+        "consumed_after": 6,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          15,
+          16,
+          18
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 12,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 6,
+        "consumed_after": 7,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 13,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          9
+        ],
+        "consumed_before": 7,
+        "consumed_after": 7,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 14,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "consumed_before": 7,
+        "consumed_after": 7,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 15,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={*} match=[*] ops=[push(13)] -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13
+        ],
+        "consumed_before": 7,
+        "consumed_after": 8,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(13)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 16,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10
+        ],
+        "consumed_before": 8,
+        "consumed_after": 9,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 17,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10
+        ],
+        "consumed_before": 9,
+        "consumed_after": 10,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 18,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          11
+        ],
+        "consumed_before": 10,
+        "consumed_after": 11,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 19,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          9
+        ],
+        "consumed_before": 11,
+        "consumed_after": 11,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 20,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 11,
+        "consumed_after": 11,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 21,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 11,
+        "consumed_after": 11,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 22,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={+} match=[*] ops=[push(16)] -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16
+        ],
+        "consumed_before": 11,
+        "consumed_after": 12,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(16)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 23,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "consumed_before": 12,
+        "consumed_after": 13,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 24,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "consumed_before": 13,
+        "consumed_after": 13,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 25,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,9] ops=[pop(1) push(18)] -> s18",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "consumed_before": 13,
+        "consumed_after": 13,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(18)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 26,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,15,16,18] ops=[pop(3) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 13,
+        "consumed_after": 13,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          15,
+          16,
+          18
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 27,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 13,
+        "consumed_after": 14,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 28,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "consumed_before": 14,
+        "consumed_after": 14,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 29,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "consumed_before": 14,
+        "consumed_after": 14,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 30,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={*} match=[*] ops=[push(13)] -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13
+        ],
+        "consumed_before": 14,
+        "consumed_after": 15,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(13)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 31,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10
+        ],
+        "consumed_before": 15,
+        "consumed_after": 16,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 32,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          11
+        ],
+        "consumed_before": 16,
+        "consumed_after": 17,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 33,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          11
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "consumed_before": 17,
+        "consumed_after": 17,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 34,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "consumed_before": 17,
+        "consumed_after": 17,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 35,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "consumed_before": 17,
+        "consumed_after": 17,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 36,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={+} match=[*] ops=[push(16)] -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16
+        ],
+        "consumed_before": 17,
+        "consumed_after": 18,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(16)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 37,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          11
+        ],
+        "consumed_before": 18,
+        "consumed_after": 19,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 38,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          9
+        ],
+        "consumed_before": 19,
+        "consumed_after": 19,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 39,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,9] ops=[pop(1) push(18)] -> s18",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          18
+        ],
+        "consumed_before": 19,
+        "consumed_after": 19,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(18)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 40,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,15,16,18] ops=[pop(3) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "consumed_before": 19,
+        "consumed_after": 19,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          15,
+          16,
+          18
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 41,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 19,
+        "consumed_after": 20,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 42,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[13,10,15,17] ops=[pop(3) push(14)] -> s14",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          14
+        ],
+        "consumed_before": 20,
+        "consumed_after": 20,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          13,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(14)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 43,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12,13,14] ops=[pop(3) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "consumed_before": 20,
+        "consumed_after": 20,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12,
+          13,
+          14
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 44,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "consumed_before": 20,
+        "consumed_after": 20,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 45,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 20,
+        "consumed_after": 21,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 46,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[13,10,15,17] ops=[pop(3) push(14)] -> s14",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          14
+        ],
+        "consumed_before": 21,
+        "consumed_after": 21,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          13,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(14)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 47,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12,13,14] ops=[pop(3) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "consumed_before": 21,
+        "consumed_after": 21,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12,
+          13,
+          14
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 48,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          10,
+          15
+        ],
+        "consumed_before": 21,
+        "consumed_after": 21,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 49,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 21,
+        "consumed_after": 22,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 50,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[3,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          9
+        ],
+        "consumed_before": 22,
+        "consumed_after": 22,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          3,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 51,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          9
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[3,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          12
+        ],
+        "consumed_before": 22,
+        "consumed_after": 22,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          3,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 52,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          12
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[3,12] ops=[pop(1) push(8)] -> s8",
+        "state_after": 8,
+        "stack_after": [
+          0,
+          3,
+          8
+        ],
+        "consumed_before": 22,
+        "consumed_after": 22,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          3,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(8)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 53,
+        "state_before": 8,
+        "stack_before": [
+          0,
+          3,
+          8
+        ],
+        "lookahead": "+",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={+} match=[*] ops=[push(16)] -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16
+        ],
+        "consumed_before": 22,
+        "consumed_after": 23,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(16)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 54,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10
+        ],
+        "consumed_before": 23,
+        "consumed_after": 24,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 55,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10
+        ],
+        "consumed_before": 24,
+        "consumed_after": 25,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 56,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          11
+        ],
+        "consumed_before": 25,
+        "consumed_after": 26,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 57,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          9
+        ],
+        "consumed_before": 26,
+        "consumed_after": 26,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 58,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 26,
+        "consumed_after": 26,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 59,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={*} match=[*] ops=[push(13)] -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "consumed_before": 26,
+        "consumed_after": 27,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(13)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 60,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "consumed_before": 27,
+        "consumed_after": 28,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 61,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[13,11] ops=[pop(1) push(14)] -> s14",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "consumed_before": 28,
+        "consumed_after": 28,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          13,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(14)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 62,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12,13,14] ops=[pop(3) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 28,
+        "consumed_after": 28,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12,
+          13,
+          14
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 63,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 28,
+        "consumed_after": 28,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 64,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 28,
+        "consumed_after": 29,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 65,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          9
+        ],
+        "consumed_before": 29,
+        "consumed_after": 29,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 66,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          9
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          12
+        ],
+        "consumed_before": 29,
+        "consumed_after": 29,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 67,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          12
+        ],
+        "lookahead": "+",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={+} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "consumed_before": 29,
+        "consumed_after": 29,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 68,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "lookahead": "+",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={+} match=[*] ops=[push(16)] -> s16",
+        "state_after": 16,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16
+        ],
+        "consumed_before": 29,
+        "consumed_after": 30,
+        "accepted_symbols": [
+          "+"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(16)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 69,
+        "state_before": 16,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10
+        ],
+        "consumed_before": 30,
+        "consumed_after": 31,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 70,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10
+        ],
+        "lookahead": "(",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={(} match=[*] ops=[push(10)] -> s10",
+        "state_after": 10,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10
+        ],
+        "consumed_before": 31,
+        "consumed_after": 32,
+        "accepted_symbols": [
+          "("
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(10)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 71,
+        "state_before": 10,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          11
+        ],
+        "consumed_before": 32,
+        "consumed_after": 33,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 72,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          11
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,11] ops=[pop(1) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          9
+        ],
+        "consumed_before": 33,
+        "consumed_after": 33,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 73,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 33,
+        "consumed_after": 33,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 74,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={*} match=[*] ops=[push(13)] -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "consumed_before": 33,
+        "consumed_after": 34,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(13)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 75,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "consumed_before": 34,
+        "consumed_after": 35,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 76,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[13,11] ops=[pop(1) push(14)] -> s14",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "consumed_before": 35,
+        "consumed_after": 35,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          13,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(14)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 77,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12,13,14] ops=[pop(3) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "consumed_before": 35,
+        "consumed_after": 35,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12,
+          13,
+          14
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 78,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15
+        ],
+        "consumed_before": 35,
+        "consumed_after": 35,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 79,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 35,
+        "consumed_after": 36,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 80,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          10,
+          15,
+          17
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          9
+        ],
+        "consumed_before": 36,
+        "consumed_after": 36,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 81,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          9
+        ],
+        "lookahead": "*",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={*} match=[10,9] ops=[pop(1) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "consumed_before": 36,
+        "consumed_after": 36,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [
+          10,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 82,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "lookahead": "*",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={*} match=[*] ops=[push(13)] -> s13",
+        "state_after": 13,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13
+        ],
+        "consumed_before": 36,
+        "consumed_after": 37,
+        "accepted_symbols": [
+          "*"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(13)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 83,
+        "state_before": 13,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13
+        ],
+        "lookahead": "id",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={id} match=[*] ops=[push(11)] -> s11",
+        "state_after": 11,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          11
+        ],
+        "consumed_before": 37,
+        "consumed_after": 38,
+        "accepted_symbols": [
+          "id"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(11)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 84,
+        "state_before": 11,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          11
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[13,11] ops=[pop(1) push(14)] -> s14",
+        "state_after": 14,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          14
+        ],
+        "consumed_before": 38,
+        "consumed_after": 38,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          13,
+          11
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(14)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 85,
+        "state_before": 14,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12,
+          13,
+          14
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12,13,14] ops=[pop(3) push(12)] -> s12",
+        "state_after": 12,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "consumed_before": 38,
+        "consumed_after": 38,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12,
+          13,
+          14
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(12)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 86,
+        "state_before": 12,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          12
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,12] ops=[pop(1) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15
+        ],
+        "consumed_before": 38,
+        "consumed_after": 38,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          12
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 87,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 38,
+        "consumed_after": 39,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 88,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          9
+        ],
+        "consumed_before": 39,
+        "consumed_after": 39,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 89,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,9] ops=[pop(1) push(18)] -> s18",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          18
+        ],
+        "consumed_before": 39,
+        "consumed_after": 39,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(18)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 90,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[10,15,16,18] ops=[pop(3) push(15)] -> s15",
+        "state_after": 15,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "consumed_before": 39,
+        "consumed_after": 39,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          10,
+          15,
+          16,
+          18
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(15)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 91,
+        "state_before": 15,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(17)] -> s17",
+        "state_after": 17,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          17
+        ],
+        "consumed_before": 39,
+        "consumed_after": 40,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(17)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 92,
+        "state_before": 17,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          10,
+          15,
+          17
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,10,15,17] ops=[pop(3) push(9)] -> s9",
+        "state_after": 9,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          9
+        ],
+        "consumed_before": 40,
+        "consumed_after": 40,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          10,
+          15,
+          17
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(9)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 93,
+        "state_before": 9,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          9
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[16,9] ops=[pop(1) push(18)] -> s18",
+        "state_after": 18,
+        "stack_after": [
+          0,
+          3,
+          8,
+          16,
+          18
+        ],
+        "consumed_before": 40,
+        "consumed_after": 40,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          16,
+          9
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(18)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 94,
+        "state_before": 18,
+        "stack_before": [
+          0,
+          3,
+          8,
+          16,
+          18
+        ],
+        "lookahead": ")",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={)} match=[3,8,16,18] ops=[pop(3) push(8)] -> s8",
+        "state_after": 8,
+        "stack_after": [
+          0,
+          3,
+          8
+        ],
+        "consumed_before": 40,
+        "consumed_after": 40,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [
+          3,
+          8,
+          16,
+          18
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(8)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 95,
+        "state_before": 8,
+        "stack_before": [
+          0,
+          3,
+          8
+        ],
+        "lookahead": ")",
+        "edge_kind": "ACCEPTANCE",
+        "edge_text": "ACC on={)} match=[*] ops=[push(19)] -> s19",
+        "state_after": 19,
+        "stack_after": [
+          0,
+          3,
+          8,
+          19
+        ],
+        "consumed_before": 40,
+        "consumed_after": 41,
+        "accepted_symbols": [
+          ")"
+        ],
+        "stack_match": [],
+        "stack_ops": [
+          "push(19)"
+        ],
+        "consumes_input": true
+      },
+      {
+        "step": 96,
+        "state_before": 19,
+        "stack_before": [
+          0,
+          3,
+          8,
+          19
+        ],
+        "lookahead": "$",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={$} match=[0,3,8,19] ops=[pop(3) push(2)] -> s2",
+        "state_after": 2,
+        "stack_after": [
+          0,
+          2
+        ],
+        "consumed_before": 41,
+        "consumed_after": 41,
+        "accepted_symbols": [
+          "$"
+        ],
+        "stack_match": [
+          0,
+          3,
+          8,
+          19
+        ],
+        "stack_ops": [
+          "pop(3)",
+          "push(2)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 97,
+        "state_before": 2,
+        "stack_before": [
+          0,
+          2
+        ],
+        "lookahead": "$",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={$} match=[0,2] ops=[pop(1) push(5)] -> s5",
+        "state_after": 5,
+        "stack_after": [
+          0,
+          5
+        ],
+        "consumed_before": 41,
+        "consumed_after": 41,
+        "accepted_symbols": [
+          "$"
+        ],
+        "stack_match": [
+          0,
+          2
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(5)"
+        ],
+        "consumes_input": false
+      },
+      {
+        "step": 98,
+        "state_before": 5,
+        "stack_before": [
+          0,
+          5
+        ],
+        "lookahead": "$",
+        "edge_kind": "REDUCTION",
+        "edge_text": "RED on={$} match=[0,5] ops=[pop(1) push(1)] -> s1",
+        "state_after": 1,
+        "stack_after": [
+          0,
+          1
+        ],
+        "consumed_before": 41,
+        "consumed_after": 41,
+        "accepted_symbols": [
+          "$"
+        ],
+        "stack_match": [
+          0,
+          5
+        ],
+        "stack_ops": [
+          "pop(1)",
+          "push(1)"
+        ],
+        "consumes_input": false
+      }
+    ]
+  }
+}
