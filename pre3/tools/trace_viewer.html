@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pre³ — NPDA · LR(1) · DPDA Visualizer</title>
+  <title>Pre³ — LR(1) · DPDA Visualizer</title>
   <script src="https://unpkg.com/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,7 +244,7 @@
     .progrow .lab { text-align: right; font-variant-numeric: tabular-nums; font-family: 'JetBrains Mono'; color: var(--muted); }
 
     /* MACHINE PANES */
-    .machines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .machines { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
     @media (max-width: 1200px) { .machines { grid-template-columns: 1fr; } }
     
     .machine { padding: 0; display: flex; flex-direction: column; overflow: hidden; }
@@ -389,7 +389,7 @@
     <div class="titlebar">
       <div class="brand">
         <span class="pre">Pre³</span>
-        <small>NPDA · LR(1) · DPDA VISUALIZER</small>
+        <small>LR(1) · DPDA VISUALIZER</small>
       </div>
       <span style="flex: 1"></span>
       <span class="muted" style="font-size: 12px; font-weight: 500;">
@@ -439,7 +439,6 @@
         <h4>Input token stream</h4>
         <div id="tape" class="tape"></div>
         <div class="legend" style="margin-top: 12px;">
-          <span><span class="dot npda"></span>NPDA frontier head</span>
           <span><span class="dot lr"></span>LR(1) lookahead</span>
           <span><span class="dot dp"></span>DPDA consumed</span>
         </div>
@@ -463,7 +462,6 @@
         <span id="stepLabel" class="muted" style="min-width: 48px; text-align: right; font-family: 'JetBrains Mono'; color: #fff;">0 / 0</span>
       </div>
       <div class="col" style="margin-top: 4px;">
-        <div class="progrow"><span class="tag npda">NPDA</span><div class="prog npda"><i id="pNpda"></i></div><span class="lab" id="lNpda">0/0</span></div>
         <div class="progrow"><span class="tag lr">LR</span><div class="prog lr"><i id="pLr"></i></div><span class="lab" id="lLr">0/0</span></div>
         <div class="progrow"><span class="tag dp">DPDA</span><div class="prog dp"><i id="pDp"></i></div><span class="lab" id="lDp">0/0</span></div>
       </div>
@@ -471,33 +469,7 @@
 
     <!--  Three machines -->
     <div class="machines">
-      <!-- NPDA pane -->
-      <section class="panel machine">
-        <header class="m-head">
-          <span class="name npda">NPDA</span>
-          <span class="sub">non-deterministic · CFG → NPDA</span>
-          <span class="grow"></span>
-          <span id="npdaSummary" class="muted" style="font-size:12px; font-family: 'JetBrains Mono';"></span>
-        </header>
-        <div class="m-body">
-          <div id="npdaGraph" class="graph"></div>
-          <div class="row" style="justify-content: space-between;">
-            <span class="badge" style="background: rgba(94, 129, 255, 0.15); color: #5e81ff; border: 1px solid rgba(94, 129, 255, 0.3);" id="npdaPhase">phase: —</span>
-            <span class="muted" style="font-size: 11px; font-family: 'JetBrains Mono';">
-              Frontier: <strong id="npdaFrontierCount" style="color:#fff;">—</strong>
-              <span id="npdaTrunc"></span>
-            </span>
-          </div>
-          <div style="flex: 1; display: flex; flex-direction: column;">
-            <h4>Live configurations</h4>
-            <div id="npdaFrontier" class="frontier" style="flex: 1;"></div>
-          </div>
-          <div>
-              <h4>Step detail</h4>
-              <pre class="pre" id="npdaDetail">—</pre>
-          </div>
-        </div>
-      </section>
+
 
       <!-- LR(1) pane -->
       <section class="panel machine">
@@ -592,7 +564,7 @@
     let bundle = [];
     let stepIdx = 0;
     let timer = null;
-    let cyNpda = null, cyLr = null, cyDp = null;
+    let cyLr = null, cyDp = null;
     let layoutMode = "circle";
 
     const el = (id) => document.getElementById(id);
@@ -620,12 +592,10 @@
        progress bar shows how far it is in its own sequence.           */
     function lrSteps()  { return (trace && trace.lr   && trace.lr.steps)   || []; }
     function dpSteps()  { return (trace && trace.dpda && trace.dpda.steps) || []; }
-    function npSteps()  { return (trace && trace.npda && trace.npda.steps) || []; }
-    function maxIdx()   { return Math.max(0, Math.max(lrSteps().length, dpSteps().length, npSteps().length) - 1); }
+    function maxIdx()   { return Math.max(0, Math.max(lrSteps().length, dpSteps().length) - 1); }
     function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
     function lrI() { return clamp(stepIdx, 0, Math.max(0, lrSteps().length - 1)); }
     function dpI() { return clamp(stepIdx, 0, Math.max(0, dpSteps().length - 1)); }
-    function npI() { return clamp(stepIdx, 0, Math.max(0, npSteps().length - 1)); }
 
     /* ----------- token tape ------------------------------------------- */
     function lrTokenIdx() {
@@ -639,18 +609,14 @@
       const n = (trace.tokens || []).length;
       return clamp(s.consumed_after, 0, n);
     }
-    function npTokenIdx() {
-      const s = npSteps()[npI()]; if (!s) return 0;
-      const n = (trace.tokens || []).length;
-      return clamp(s.consumed_after !== undefined ? s.consumed_after : s.input_pos_after, 0, n);
-    }
+
 
     function renderTape() {
       const root = el("tape"); root.innerHTML = "";
       if (!trace) return;
       const toks = trace.tokens || [];
-      const a = npTokenIdx(), b = lrTokenIdx(), c = dpTokenIdx();
-      const minIdx = Math.min(a, b, c);
+      const b = lrTokenIdx(), c = dpTokenIdx();
+      const minIdx = Math.min(b, c);
       const make = (txt, isEof) => {
         const w = document.createElement("div");
         w.className = "tok" + (isEof ? " eof" : "");
@@ -661,11 +627,9 @@
       all.forEach((t, i) => {
         const w = make(t, i === all.length - 1);
         if (i < minIdx) w.classList.add("consumed");
-        if (i === a) w.classList.add("h-npda");
         if (i === b) w.classList.add("h-lr");
         if (i === c) w.classList.add("h-dp");
         const marks = document.createElement("div"); marks.className = "tok-marks";
-        if (i === a) { const e = document.createElement("span"); e.className = "m npda"; e.textContent = "N"; marks.appendChild(e); }
         if (i === b) { const e = document.createElement("span"); e.className = "m lr";   e.textContent = "L"; marks.appendChild(e); }
         if (i === c) { const e = document.createElement("span"); e.className = "m dp";   e.textContent = "D"; marks.appendChild(e); }
         w.appendChild(marks);
@@ -707,7 +671,6 @@
         }
         verd.appendChild(v);
       }
-      pill("NPDA",  trace.npda, "var(--hl-npda)");
       pill("LR(1)", trace.lr,   "var(--hl-lr)");
       pill("DPDA",  trace.dpda, "var(--hl-dp)");
 
@@ -743,10 +706,8 @@
     function renderMachineSummaries() {
       const lr = trace.lr || {};
       const dp = trace.dpda || {};
-      const np = trace.npda || {};
       el("lrSummary").textContent = lr.available ? `${lr.state_count} states · ${lrSteps().length} steps` : "unavailable";
       el("dpSummary").textContent = dp.available ? `${dp.state_count} states · ${dp.edge_count} edges · ${dpSteps().length} steps` : "unavailable";
-      el("npdaSummary").textContent = np.available ? `${np.state_count} states · ${np.transition_count || 0} transitions` : "unavailable";
     }
 
     /* ----------- Cytoscape graph helpers ------------------------------ */
@@ -885,7 +846,7 @@
     }
 
     function relayoutAll() {
-      [cyNpda, cyLr, cyDp].forEach(c => { if (c) c.layout(layoutFor(layoutMode)).run(); });
+      [cyLr, cyDp].forEach(c => { if (c) c.layout(layoutFor(layoutMode)).run(); });
     }
 
     /* ----------- LR pane ---------------------------------------------- */
@@ -1057,66 +1018,6 @@
       highlightSingle(cyDp, s.state_after, edgeFn);
     }
 
-    /* ----------- NPDA pane -------------------------------------------- */
-    function renderNPDA() {
-      const np = trace.npda || {};
-      const steps = npSteps();
-      if (!np.available || !steps.length) {
-        el("npdaPhase").textContent = "phase: unavailable";
-        el("npdaFrontierCount").textContent = "—";
-        el("npdaTrunc").textContent = "";
-        el("npdaFrontier").innerHTML = '<div class="fc-empty">'
-          + (np.error ? "NPDA unavailable: " + escapeHtml(np.error) : "no NPDA trace") + '</div>';
-        el("npdaDetail").textContent = np.error || "—";
-        return;
-      }
-      const s = steps[npI()];
-      el("npdaPhase").innerHTML =
-        `<span class="badge ${s.phase === "consume" ? "shift" : "eps"}">phase: ${s.phase}</span>` +
-        `&nbsp;<span class="muted" style="font-size:11px;">lookahead ${escapeHtml(s.lookahead)}</span>`;
-      const cnt = s.frontier_size_after;
-      el("npdaFrontierCount").textContent = `${cnt} ${cnt === 1 ? "config" : "configs"} live`;
-      el("npdaTrunc").innerHTML = s.truncated ? '<span class="badge bad">truncated</span>' : "";
-
-      // frontier cards
-      const root = el("npdaFrontier"); root.innerHTML = "";
-      const beforeKey = (c) => c.state + "|" + JSON.stringify(c.stack) + "|" + JSON.stringify(c.remaining);
-      const beforeSet = new Set((s.frontier_before || []).map(beforeKey));
-      const after = s.frontier_after || [];
-      if (!after.length) {
-        root.innerHTML = '<div class="fc-empty">Frontier empty — NPDA has no live configurations</div>';
-      } else {
-        after.forEach(cfg => {
-          const card = document.createElement("div");
-          card.className = "fc";
-          if (!beforeSet.has(beforeKey(cfg))) card.classList.add("new");
-          const stateRow = document.createElement("div"); stateRow.className = "fc-state"; stateRow.textContent = "▸ " + cfg.state;
-          const stackRow = document.createElement("div"); stackRow.className = "fc-stack";
-          (cfg.stack || []).forEach(sym => {
-            const sp = document.createElement("span"); sp.className = "s"; sp.textContent = sym; stackRow.appendChild(sp);
-          });
-          const rem = document.createElement("div"); rem.className = "fc-rem";
-          rem.textContent = "remaining: " + ((cfg.remaining && cfg.remaining.length)
-              ? cfg.remaining.join(" ") : "(empty)");
-          card.appendChild(stateRow);
-          card.appendChild(stackRow);
-          card.appendChild(rem);
-          root.appendChild(card);
-        });
-      }
-
-      el("npdaDetail").textContent = [
-        `step ${s.step}`,
-        `phase: ${s.phase}`,
-        `lookahead: ${s.lookahead}`,
-        `frontier: ${s.frontier_size_before} → ${s.frontier_size_after}` + (s.truncated ? "  (capped — true frontier may be larger)" : ""),
-        s.summary || "",
-      ].filter(Boolean).join("\n");
-
-      // graph: highlight all states present in frontier
-      const ids = Array.from(new Set(after.map(c => c.state)));
-      highlightFrontier(cyNpda, ids);
-    }
 
     /* ----------- bottom (productions / mask) -------------------------- */
     function renderProductions() {
@@ -1140,19 +1041,15 @@
       el("step").value = String(stepIdx);
       el("stepLabel").textContent = `${stepIdx + 1} / ${m + 1}`;
 
-      const np = npSteps().length, l = lrSteps().length, d = dpSteps().length;
-      const npFrac = np ? Math.min(stepIdx + 1, np) / np : 0;
+      const l = lrSteps().length, d = dpSteps().length;
       const lFrac  = l  ? Math.min(stepIdx + 1, l)  / l  : 0;
       const dFrac  = d  ? Math.min(stepIdx + 1, d)  / d  : 0;
-      el("pNpda").style.width = (npFrac * 100).toFixed(2) + "%";
       el("pLr").style.width   = (lFrac  * 100).toFixed(2) + "%";
       el("pDp").style.width   = (dFrac  * 100).toFixed(2) + "%";
-      el("lNpda").textContent = `${np ? Math.min(stepIdx + 1, np) : 0}/${np}`;
       el("lLr").textContent   = `${l  ? Math.min(stepIdx + 1, l)  : 0}/${l}`;
       el("lDp").textContent   = `${d  ? Math.min(stepIdx + 1, d)  : 0}/${d}`;
 
       renderTape();
-      renderNPDA();
       renderLR();
       renderDPDA();
       renderProductions();
@@ -1192,10 +1089,8 @@
 
       renderHeader();
       renderMachineSummaries();
-      cyNpda = destroyGraph(cyNpda);
       cyLr   = destroyGraph(cyLr);
       cyDp   = destroyGraph(cyDp);
-      cyNpda = makeGraph(el("npdaGraph"), trace.npda.automaton, "npda");
       cyLr   = makeGraph(el("lrGraph"),   trace.lr.automaton,   "lr");
       cyDp   = makeGraph(el("dpGraph"),   trace.dpda.automaton, "dpda");
       setStep(0);
